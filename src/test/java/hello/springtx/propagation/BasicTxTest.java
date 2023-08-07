@@ -125,5 +125,25 @@ public class BasicTxTest {
         txManager.rollback(outer);
     }
 
+    @Test
+    void inner_rollback() {
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("outer.isNewTransaction()={}", outer.isNewTransaction());
+
+        log.info("내부 트랜잭션 시작");
+        TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("inner.isNewTransaction()={}", inner.isNewTransaction());
+
+        log.info("내부 트랜잭션 롤백!!");
+        txManager.rollback(inner);
+        //물리 트랜잭션을 롤백하는 것은 아니고, 트랜잭션을 롤백전용으로 표시한다.
+
+        //Transaction rolled back because it has been marked as rollback-only 오류 발생!
+        log.info("외부 트랜잭션 커밋");
+        txManager.commit(outer);
+
+    }
+
 
 }
