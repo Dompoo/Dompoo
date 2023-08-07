@@ -1,4 +1,4 @@
-package hello.springtx.propagation;
+package dompoo.springtx.propagation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;

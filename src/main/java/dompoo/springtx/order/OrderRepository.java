@@ -1,4 +1,4 @@
-package hello.springtx.order;
+package dompoo.springtx.order;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

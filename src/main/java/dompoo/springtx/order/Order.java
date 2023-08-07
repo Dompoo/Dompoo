@@ -1,4 +1,4 @@
-package hello.springtx.order;
+package dompoo.springtx.order;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

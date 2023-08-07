@@ -1,4 +1,4 @@
-package hello.springtx.order;
+package dompoo.springtx.order;
 
 public class NotEnoughMoneyException extends Exception {
 

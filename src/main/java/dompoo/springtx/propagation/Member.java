@@ -1,4 +1,4 @@
-package hello.springtx.propagation;
+package dompoo.springtx.propagation;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

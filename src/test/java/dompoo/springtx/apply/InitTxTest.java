@@ -1,4 +1,4 @@
-package hello.springtx.apply;
+package dompoo.springtx.apply;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package hello.springtx.propagation;
+package dompoo.springtx.propagation;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
