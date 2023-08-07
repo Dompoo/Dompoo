@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 public class RollbackTest {
 
-    @Autowired RollbackServcie servcie;
+    @Autowired
+    RollbackServcie servcie;
 
     @Test
     void runtimeExceptin() {

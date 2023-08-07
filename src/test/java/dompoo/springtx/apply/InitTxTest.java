@@ -15,7 +15,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @SpringBootTest
 public class InitTxTest {
 
-    @Autowired Hello hello;
+    @Autowired
+    Hello hello;
 
     @Test
     void go() {

@@ -9,10 +9,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "orders")
-@Getter @Setter
+@Getter
+@Setter
 public class Order {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String username; //정상, 예외, 잔고부족

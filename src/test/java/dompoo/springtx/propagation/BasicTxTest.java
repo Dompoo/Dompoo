@@ -23,14 +23,6 @@ public class BasicTxTest {
     @Autowired
     PlatformTransactionManager txManager;
 
-    @TestConfiguration
-    static class Cofig {
-        @Bean
-        public PlatformTransactionManager transactionManager(DataSource dataSource) {
-            return new DataSourceTransactionManager(dataSource);
-        }
-    }
-
     @Test
     void commit() {
         log.info("트랜잭션 시작");
@@ -87,7 +79,7 @@ public class BasicTxTest {
      * 첫번째 트랜잭션(외부)이 시작되고, 끝나기 전에 다음 트랜잭션(내부)이 시작되면,
      * 내부 트랜잭션이 외부 트랜잭션에 참여하는 것 처럼 작동한다. 따라서 하나의 트랜잭션으로 만들어준다.
      * 이때 각각의 트랜잭션을 논리 트랜잭션이라고 하고, 하나의 큰 트랜잭션을 물리 트랜잭션이라고 한다.
-     *
+     * <p>
      * 규칙1. 모든 논리 트랜잭션이 커밋되어야 물리 트랜잭션이 전체 커밋된다.
      * 규칙2. 하나의 논리 트랜잭션이라도 롤백되면 물리 트랜잭션은 전체 롤백된다.
      */
@@ -144,7 +136,7 @@ public class BasicTxTest {
 
         //Transaction rolled back because it has been marked as rollback-only 오류 발생!
         log.info("외부 트랜잭션 커밋");
-        Assertions.assertThatThrownBy(()->txManager.commit(outer))
+        Assertions.assertThatThrownBy(() -> txManager.commit(outer))
                 .isInstanceOf(UnexpectedRollbackException.class);
     }
 
@@ -167,6 +159,14 @@ public class BasicTxTest {
 
         log.info("외부 트랜잭션 커밋");
         txManager.commit(outer);
+    }
+
+    @TestConfiguration
+    static class Cofig {
+        @Bean
+        public PlatformTransactionManager transactionManager(DataSource dataSource) {
+            return new DataSourceTransactionManager(dataSource);
+        }
     }
 
 

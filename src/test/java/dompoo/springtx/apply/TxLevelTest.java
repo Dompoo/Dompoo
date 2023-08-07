@@ -12,7 +12,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @SpringBootTest
 public class TxLevelTest {
 
-    @Autowired LevelService levelService;
+    @Autowired
+    LevelService levelService;
 
     @Test
     void orderTest() {

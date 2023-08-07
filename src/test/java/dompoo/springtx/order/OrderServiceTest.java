@@ -12,8 +12,10 @@ import java.util.Optional;
 @SpringBootTest
 class OrderServiceTest {
 
-    @Autowired OrderService orderService;
-    @Autowired OrderRepository orderRepository;
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    OrderRepository orderRepository;
 
     @Test
     void complete() throws NotEnoughMoneyException {

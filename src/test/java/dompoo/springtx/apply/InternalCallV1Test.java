@@ -14,7 +14,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @SpringBootTest
 public class InternalCallV1Test {
 
-    @Autowired CallService callService;
+    @Autowired
+    CallService callService;
 
     @Test
     void printProxy() {
