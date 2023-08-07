@@ -45,13 +45,13 @@ class MemberServiceTest {
     @Test
     void outerTxOff_fail() {
         //given
-        String username = "로그예외_outerTxOff_success";
+        String username = "로그예외_outerTxOff_fail";
 
         //when
         assertThatThrownBy(() -> memberService.joinV1(username))
                 .isInstanceOf(RuntimeException.class);
 
-        //then : 모든 데이터가 정상 저장된다.
+        //then : 로그 데이터만이 롤백 된다. (각각 Tx)
         assertTrue(memberRepository.find(username).isPresent());
         assertTrue(logRepository.find(username).isEmpty());
     }
@@ -93,5 +93,18 @@ class MemberServiceTest {
         assertTrue(logRepository.find(username).isPresent());
     }
 
+    @Test
+    void outerTxOn_fail() {
+        //given
+        String username = "로그예외_outerTxOn_fail";
+
+        //when
+        assertThatThrownBy(() -> memberService.joinV1(username))
+                .isInstanceOf(RuntimeException.class);
+
+        //then : 모든 데이터가 전체 롤백 되어야 한다. -> 데이터 정합성 문제 X
+        assertTrue(memberRepository.find(username).isEmpty());
+        assertTrue(logRepository.find(username).isEmpty());
+    }
 
 }
