@@ -5,28 +5,29 @@ import dompoo.advanced.trace.TraceStatus;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FieldLogTrace implements LogTrace {
+public class ThreadLocalLogTrace implements LogTrace {
 
     private static final String START_PREFIX = "-->";
     private static final String COMPLETE_PREFIX = "<--";
     private static final String EX_PREFIX = "<X-";
 
-    private TraceId traceIdHolder;
+    private final ThreadLocal<TraceId> traceIdHolder = new ThreadLocal<>();
 
     @Override
     public TraceStatus begin(String message) {
         syncTraceId(); // traceIdHolder != null 보장
-        TraceId traceId = traceIdHolder;
+        TraceId traceId = traceIdHolder.get();
         long startTimeMs = System.currentTimeMillis();
         log.info("[{}] {}{}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message);
         return new TraceStatus(traceId, startTimeMs, message);
     }
 
     private void syncTraceId() {
-        if (traceIdHolder == null) {
-            traceIdHolder = new TraceId(); //최초호출, 레벨 0
+        TraceId traceId = traceIdHolder.get();
+        if (traceId == null) {
+            traceIdHolder.set(new TraceId()); //최초호출, 레벨 0
         } else {
-            traceIdHolder = traceIdHolder.createNextId();
+            traceIdHolder.set(traceId.createNextId());
         }
     }
 
@@ -55,10 +56,12 @@ public class FieldLogTrace implements LogTrace {
     }
 
     private void releaseTraceId() {
-        if (traceIdHolder.isfirstlevel()) {
-            traceIdHolder = null; //마지막호출, 레벨 0, detroy
+        TraceId traceId = traceIdHolder.get();
+
+        if (traceId.isfirstlevel()) {
+            traceIdHolder.remove(); //마지막호출, 레벨 0, threadLocal은 remove해주어야 한다.
         } else {
-            traceIdHolder = traceIdHolder.createPrevId();
+            traceIdHolder.set(traceId.createPrevId());
         }
     }
 
