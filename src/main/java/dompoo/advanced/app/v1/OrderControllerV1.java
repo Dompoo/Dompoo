@@ -1,7 +1,7 @@
 package dompoo.advanced.app.v1;
 
-import dompoo.advanced.helloTrace.HelloTraceV1;
 import dompoo.advanced.trace.TraceStatus;
+import dompoo.advanced.trace.helloTrace.HelloTraceV1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

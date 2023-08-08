@@ -1,8 +1,8 @@
 package dompoo.advanced.app.v2;
 
-import dompoo.advanced.helloTrace.HelloTraceV2;
 import dompoo.advanced.trace.TraceId;
 import dompoo.advanced.trace.TraceStatus;
+import dompoo.advanced.trace.helloTrace.HelloTraceV2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

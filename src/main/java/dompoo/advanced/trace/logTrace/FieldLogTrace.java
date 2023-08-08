@@ -1,46 +1,44 @@
-package dompoo.advanced.helloTrace;
+package dompoo.advanced.trace.logTrace;
 
 import dompoo.advanced.trace.TraceId;
 import dompoo.advanced.trace.TraceStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
-public class HelloTraceV2 {
+public class FieldLogTrace implements LogTrace {
 
     private static final String START_PREFIX = "-->";
     private static final String COMPLETE_PREFIX = "<--";
     private static final String EX_PREFIX = "<X-";
 
-    private static String addSpace(String prefix, int level) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < level; i++) {
-            sb.append((i == level - 1) ? "|" + prefix : "|   ");
-        }
-        return sb.toString();
-    }
+    private TraceId traceIdHolder;
 
+    @Override
     public TraceStatus begin(String message) {
-        TraceId traceId = new TraceId();
+        syncTraceId(); // traceIdHolder != null 보장
+        TraceId traceId = traceIdHolder;
         long startTimeMs = System.currentTimeMillis();
         log.info("[{}] {}{}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message);
         return new TraceStatus(traceId, startTimeMs, message);
     }
 
-    public TraceStatus beginSync(TraceId beforeTraceId, String message) {
-        TraceId nextId = beforeTraceId.createNextId();
-        long startTimeMs = System.currentTimeMillis();
-        log.info("[{}] {}{}", nextId.getId(), addSpace(START_PREFIX, nextId.getLevel()), message);
-        return new TraceStatus(nextId, startTimeMs, message);
+    private void syncTraceId() {
+        if (traceIdHolder == null) {
+            traceIdHolder = new TraceId(); //최초호출, 레벨 0
+        } else {
+            traceIdHolder = traceIdHolder.createNextId();
+        }
     }
 
+    @Override
     public void end(TraceStatus status) {
         complete(status, null);
     }
 
+    @Override
     public void exception(TraceStatus status, Exception e) {
         complete(status, e);
+
     }
 
     private void complete(TraceStatus status, Exception e) {
@@ -52,5 +50,23 @@ public class HelloTraceV2 {
         } else {
             log.info("[{}] {}{} time={}ms ex={}", traceId.getId(), addSpace(EX_PREFIX, traceId.getLevel()), status.getMessage(), resultTimeMs, e.toString());
         }
+
+        releaseTraceId();
+    }
+
+    private void releaseTraceId() {
+        if (traceIdHolder.isFirstLeve()) {
+            traceIdHolder = null; //마지막호출, 레벨 0, detroy
+        } else {
+            traceIdHolder = traceIdHolder.createPrevId();
+        }
+    }
+
+    private static String addSpace(String prefix, int level) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < level; i++) {
+            sb.append((i == level - 1) ? "|" + prefix : "|   ");
+        }
+        return sb.toString();
     }
 }

@@ -1,4 +1,4 @@
-package dompoo.advanced.helloTrace;
+package dompoo.advanced.trace.helloTrace;
 
 import dompoo.advanced.trace.TraceId;
 import dompoo.advanced.trace.TraceStatus;
