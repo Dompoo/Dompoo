@@ -1,5 +1,5 @@
 # Spring_DB2_Transaction
-인프런 김영한님 강의 Spring DB 2편 - 트랜잭션 심화
+인프런 김영한님 강의 '스프링 DB 2편' - 트랜잭션 심화
 
 ### 트랜잭션과 rollbackOnly 옵션에 대해서 공부
   
