@@ -3,8 +3,6 @@ package dompoo.advanced.helloTrace;
 import dompoo.advanced.trace.TraceStatus;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class HelloTraceV1Test {
 
     @Test
