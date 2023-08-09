@@ -1,6 +1,7 @@
 package dompoo.advanced.trace.strategy;
 
 import dompoo.advanced.trace.strategy.code.strategy.ContextV1;
+import dompoo.advanced.trace.strategy.code.strategy.Strategy;
 import dompoo.advanced.trace.strategy.code.strategy.StrategyLogic1;
 import dompoo.advanced.trace.strategy.code.strategy.StrategyLogic2;
 import lombok.extern.slf4j.Slf4j;
@@ -49,4 +50,60 @@ public class ContextV1Test {
         context1.excute();
         context2.excute();
     }
+
+    @Test
+    void strategyV2() {
+        Strategy strategy1 = new Strategy() {
+
+            @Override
+            public void call() {
+                log.info("비즈니스 로직1 실행");
+            }
+        };
+        ContextV1 context1 = new ContextV1(strategy1);
+
+        Strategy strategy2 = new Strategy() {
+
+            @Override
+            public void call() {
+                log.info("비즈니스 로직1 실행");
+            }
+        };
+        ContextV1 context2 = new ContextV1(strategy2);
+
+        context1.excute();
+        context2.excute();
+    }
+
+    @Test
+    void strategyV3() {
+        ContextV1 context1 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직1 실행");
+            }
+        });
+        ContextV1 context2 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직1 실행");
+            }
+        });
+
+        context1.excute();
+        context2.excute();
+    }
+
+    @Test
+    void strategyV4() {
+
+        //인터페이스에 메서드가 1개만 있으면 람다표현식으로 표현할 수 있다.
+        ContextV1 context1 = new ContextV1(() -> log.info("비즈니스 로직1 실행"));
+        ContextV1 context2 = new ContextV1(() -> log.info("비즈니스 로직1 실행"));
+
+        context1.excute();
+        context2.excute();
+    }
+
+
 }
