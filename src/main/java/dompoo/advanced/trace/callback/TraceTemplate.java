@@ -13,7 +13,7 @@ public class TraceTemplate {
         TraceStatus status = null;
 
         try {
-            status = trace.begin("OrderService.orderItem()");
+            status = trace.begin(message);
 
             //콜백 실행
             T result = callback.call();
