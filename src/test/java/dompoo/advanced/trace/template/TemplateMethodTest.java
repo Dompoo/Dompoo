@@ -27,6 +27,28 @@ public class TemplateMethodTest {
         template2.execute();
     }
 
+    @Test
+    void templateMethodV2() {
+        AbstarctTemplate template1 = new AbstarctTemplate() {
+
+            @Override
+            protected void call() {
+                log.info("비즈니스 로직1 실행");
+            }
+        };
+
+        AbstarctTemplate template2 = new AbstarctTemplate() {
+
+            @Override
+            protected void call() {
+                log.info("비즈니스 로직2 실행");
+            }
+        };
+
+        template1.execute();
+        template2.execute();
+    }
+
     private void logic1() {
         long startTime = System.currentTimeMillis();
         //비즈니스 로직 실행
