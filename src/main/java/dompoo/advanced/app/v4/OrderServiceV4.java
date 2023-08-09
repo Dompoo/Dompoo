@@ -14,7 +14,7 @@ public class OrderServiceV4 {
 
     public void orderItem(String itemId) {
 
-        AbstractTemplate<Void> template = new AbstractTemplate<Void>(trace) {
+        AbstractTemplate<Void> template = new AbstractTemplate<>(trace) {
             @Override
             protected Void call() {
                 orderRepository.save(itemId);
