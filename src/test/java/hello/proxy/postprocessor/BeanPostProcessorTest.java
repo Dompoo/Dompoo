@@ -40,7 +40,7 @@ public class BeanPostProcessorTest {
     }
 
     static class A {
-        public void 용helloA() {
+        public void helloA() {
             log.info("hello A");
         }
     }
