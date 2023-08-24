@@ -2,9 +2,11 @@ package dompoo.aop.pointcut;
 
 import dompoo.aop.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,18 @@ public class ParameterTest {
         public Object logArgs2(ProceedingJoinPoint joinPoint, Object arg) throws Throwable {
             log.info("[logArgs2]{}, arg={}", joinPoint.getSignature(), arg);
             return joinPoint.proceed();
+        }
+
+        @Before("allMember() && this(obj)")
+        public void thisArgs(JoinPoint joinPoint, MemberService obj) {
+            log.info("[this]{}, obj={}", joinPoint.getSignature(), obj.getClass());
+
+        }
+
+        @Before("allMember() && target(obj)")
+        public void targetArgs(JoinPoint joinPoint, MemberService obj) {
+            log.info("[target]{}, obj={}", joinPoint.getSignature(), obj.getClass());
+
         }
     }
 
