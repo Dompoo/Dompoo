@@ -1,6 +1,8 @@
 package dompoo.aop.pointcut;
 
 import dompoo.aop.member.MemberService;
+import dompoo.aop.member.annotation.ClassAop;
+import dompoo.aop.member.annotation.MethodAop;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -59,6 +61,25 @@ public class ParameterTest {
             log.info("[target]{}, obj={}", joinPoint.getSignature(), obj.getClass());
 
         }
+
+        @Before("allMember() && @target(annotation)")
+        public void atTarget(JoinPoint joinPoint, ClassAop annotation) {
+            log.info("[@target]{}, annotation={}", joinPoint.getSignature(), annotation);
+
+        }
+
+        @Before("allMember() && @within(annotation)")
+        public void atWithin(JoinPoint joinPoint, ClassAop annotation) {
+            log.info("[@within]{}, annotation={}", joinPoint.getSignature(), annotation);
+
+        }
+
+        @Before("allMember() && @annotation(annotation)")
+        public void atAnnotation(JoinPoint joinPoint, MethodAop annotation) {
+            log.info("[@annotation]{}, annotationValue={}", joinPoint.getSignature(), annotation.value());
+
+        }
+
     }
 
 }
