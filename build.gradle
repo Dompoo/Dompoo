@@ -3,7 +3,7 @@ plugins {
     id 'war'
 }
 
-group = 'hello'
+group = 'dompoo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
