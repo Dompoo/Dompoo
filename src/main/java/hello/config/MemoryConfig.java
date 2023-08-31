@@ -1,11 +1,14 @@
 package hello.config;
 
+import memory.MemoryCondition;
 import memory.MemoryController;
 import memory.MemoryFinder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@Conditional(MemoryCondition.class) //true를 반환할 때만 아래 빈들을 등록한다.
 public class MemoryConfig {
 
     @Bean
