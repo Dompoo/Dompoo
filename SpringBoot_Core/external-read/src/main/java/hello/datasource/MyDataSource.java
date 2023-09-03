@@ -1,4 +1,4 @@
-package hello.daatasource;
+package hello.datasource;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
