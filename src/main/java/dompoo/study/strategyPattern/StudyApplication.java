@@ -1,5 +1,9 @@
 package dompoo.study.strategyPattern;
 
+import dompoo.study.strategyPattern.duck.Duck;
+import dompoo.study.strategyPattern.duck.HealthyDuck;
+import dompoo.study.strategyPattern.duck.OldDuck;
+import dompoo.study.strategyPattern.duck.ToyDuck;
 import dompoo.study.strategyPattern.fly.FlyNoWay;
 import dompoo.study.strategyPattern.quack.Squeak;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package dompoo.study.strategyPattern;
+package dompoo.study.strategyPattern.duck;
 
 import dompoo.study.strategyPattern.fly.FlyNoWay;
 import dompoo.study.strategyPattern.quack.QuackNoWay;
