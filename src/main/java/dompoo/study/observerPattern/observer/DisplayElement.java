@@ -1,4 +1,4 @@
-package dompoo.study.observerPattern;
+package dompoo.study.observerPattern.observer;
 
 public interface DisplayElement {
 

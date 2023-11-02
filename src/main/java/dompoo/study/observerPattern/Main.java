@@ -1,5 +1,8 @@
 package dompoo.study.observerPattern;
 
+import dompoo.study.observerPattern.observer.ForecastDisplay;
+import dompoo.study.observerPattern.observer.TemperatureDisplay;
+import dompoo.study.observerPattern.subject.Weather;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -1,5 +1,6 @@
-package dompoo.study.observerPattern;
+package dompoo.study.observerPattern.subject;
 
+import dompoo.study.observerPattern.observer.Observer;
 import lombok.Getter;
 
 import java.util.ArrayList;
