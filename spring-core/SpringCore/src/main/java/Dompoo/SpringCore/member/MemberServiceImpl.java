@@ -1,4 +1,4 @@
-package Dompoo.SpringCore;
+package Dompoo.SpringCore.member;
 
 public class MemberServiceImpl implements MemberService {
 

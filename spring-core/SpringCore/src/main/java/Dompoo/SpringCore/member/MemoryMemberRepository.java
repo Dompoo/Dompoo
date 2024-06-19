@@ -1,4 +1,4 @@
-package Dompoo.SpringCore;
+package Dompoo.SpringCore.member;
 
 import java.util.HashMap;
 import java.util.Map;

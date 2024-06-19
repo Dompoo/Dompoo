@@ -1,4 +1,4 @@
-package Dompoo.SpringCore;
+package Dompoo.SpringCore.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
