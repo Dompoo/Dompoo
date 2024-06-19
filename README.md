@@ -1,9 +1,8 @@
 # Spring-Study
 
-2024/06/18 시작
+4학년 여름방학을 알차게 보내자.
 
-## 목차
-
+### 목차
 1. [Java](#java)
 2. [Spring Core](#spring-core)
 3. [Spring with Database](#spring-with-database)
@@ -12,41 +11,79 @@
 6. [Testing](#testing)
 
 ## Java
-
-Java 관련 주제를 다룹니다.
-
-- **함수형 인터페이스, 람다 표현식(익명함수)**: Java에서의 함수형 프로그래밍이란 무엇인가?
-- **스트림 API**: 데이터 컬렉션 처리는 어떻게 하는가?
-- **Gradle**: 빌드 자동화 도구란 무엇인가? 어떻게 사용되고 있는가?
+### 내용
+- **함수형 인터페이스, 람다 표현식(익명함수)**
+- **스트림 API**
+- **Gradle**
+### 계획
+- 방법 : 책 [Java의 정석](https://www.yes24.com/Product/Goods/24259565) 하편 참고하여 공부
+- 기간 : 06/18 ~ 06/20
 
 ## Spring Core
+### 내용
+- **IoC 컨테이너, DI**
+- **Bean 설정 및 생명주기**
+- **AOP(Aspect, Advice, Pointcut, JoinPoint)**
+### 계획
+- 방법 : 인프런 김영한님 강의 복습하며 공부
+- 강의목록
+    - 스프링 핵심 원리 - 기본편 (12시간)
+    - 스프링 핵심 원리 - 고급편 (17시간)
+    - 스프링 부트 - 핵심 원리와 활용 (16시간)
+    - 총 45시간
+- 기간 : 06/21 ~ 07/15 (하루 2시간 강의 + 1시간 Velog 정리)
 
-Spring의 핵심 기능에 대해 알아봅니다.
+## Spring MVC
+### 내용
+- **서블릿, WAS**
+- **MVC 구조와 작동방식**
+- **Bean Validation**
+### 계획
+- 방법 : 인프런 김영한님 강의 복습하며 공부
+- 강의목록
+    - 스프링 MVC 1편 (15시간)
+    - 스프링 MVC 2편 (14시간)
+    - 총 29시간
+- 기간 : 07/16 ~ 07/31 (하루 2시간 강의 + 1시간 Velog 정리)
 
-- **IoC 컨테이너, DI란?**: 객체의 생성과 생명주기 관리를 컨테이너가 담당한다는 것은 무엇인가?
-- **Bean 설정 및 생명주기**: Spring에서의 Bean객체란 무엇인가?, 생명주기는 어떻게 되는가?
-- **AOP란? Aspect, Advice, Pointcut, JoinPoint**: 관점 지향 프로그래밍이란 무엇인가? 어떻게 적용되는가?
+## Spring DB
+### 내용
+- **트랜잭션, 영속성 컨텍스트**
+- **Spring Data JPA**
+- **QueryDSL**
+### 계획
+- 방법 : 인프런 김영한님 강의 복습하며 공부
+- 강의목록
+    - 스프링 DB 1편 (10시간)
+    - 스프링 DB 2편 (14시간)
+    - 스프링부트와 JPA 활용 2편 (6시간)
+    - 총 30시간
+- 기간 : 08/01 ~ 08/16 (하루 2시간 강의 + 1시간 Velog 정리)
 
-## Spring with Database
-
-데이터베이스와의 연동을 다룹니다.
-
-- **Transaction, Spring Data JPA**: 데이터베이스 트랜잭션 관리와 Spring Data JPA 사용법, 이를 통해 데이터 일관성과 무결성을 유지하는 방법은?
-- **QueryDSL**: 타입 안전한 쿼리를 작성하는 방법, 적용법
 
 ## Spring Security
-
-보안 관련 내용을 다룹니다.
-
-- **아키텍쳐**: Spring Security의 기본 구조와 원리를 학습, 인증과 권한 부여 과정을 이해
-- **적용**: 실제 애플리케이션에 이를 어떻게 적용시킬 것인가?
-- **CSRF, CORS**: CSRF(크로스 사이트 요청 위조)와 CORS(크로스 오리진 리소스 공유)는 무엇인가? Spring Security에서는 어떻게 적용되는가?
-- **OAuth2.0, JWT**: OAuth2.0 프레임워크와 JWT(JSON Web Tokens)는 무엇인가? Spring에서 사용방법은?
+### 내용
+- **아키텍쳐**
+- **실제적용**
+- **CSRF, CORS**
+- **OAuth2.0, JWT**
+### 계획
+- 방법 : Spring 공식 문서 + 리서치, Ingrate/Hongpoong 코드 리뷰
+- 기간 : 08/16 ~ 08/20 (Velog 정리)
 
 ## Exception
-
-Spring MVC에서의 예외 처리 방법 - `@ExceptionHandler`와 `@ControllerAdvice`를 사용하여 애플리케이션 전반에 걸친 예외 처리 전략을 구현하는 방법을 학습
+### 내용
+- **Spring MVC에서의 예외 처리**
+- `@ExceptionHandler`, `@ControllerAdvice` 사용
+### 계획
+- 방법 : 리서치, Ingrate/Hongpoong 코드 리뷰
+- 기간 : 08/21 ~ 08/23 (코드 리뷰 + Velog 정리)
 
 ## Testing
-
-테스트 주도 개발(TDD)은 무엇인가? Java에서 JUnit과 assertJ를 사용한 테스트 코드 작성 방법은? 좋은 테스트 코드란 무엇이고 어떻게 작성해야 하는가?
+### 내용
+- **테스트 주도 개발(TDD)**
+- **JUnit, assertJ**
+- **좋은 테스트 코드란?**
+### 계획
+- 방법 : 책 [단위테스트](https://www.yes24.com/Product/Goods/104084175) 참고하여 공부
+- 기간 : 08/23 ~ 09/10 (Ingrate 리팩터링, Velog 정리)
