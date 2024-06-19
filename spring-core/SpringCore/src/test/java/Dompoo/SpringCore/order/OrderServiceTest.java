@@ -1,17 +1,21 @@
 package Dompoo.SpringCore.order;
 
-import Dompoo.SpringCore.member.*;
+import Dompoo.SpringCore.AppConfig;
+import Dompoo.SpringCore.member.Grade;
+import Dompoo.SpringCore.member.Member;
+import Dompoo.SpringCore.member.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class OrderServiceTest {
 
-    private final MemberService memberService = new MemberServiceImpl();
-    private final OrderService orderService = new OrderServiceImpl();
-
     @Test
     void order() {
         //given
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
+        OrderService orderService = appConfig.orderService();
+
         Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
 

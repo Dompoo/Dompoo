@@ -1,15 +1,17 @@
 package Dompoo.SpringCore.member;
 
+import Dompoo.SpringCore.AppConfig;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class MemberServiceTest {
 
-    MemberService memberService = new MemberServiceImpl();
-
     @Test
     void join() {
         //given
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
+
         Member member = new Member(1L, "username", Grade.VIP);
 
         //when
