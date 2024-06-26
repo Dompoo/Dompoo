@@ -1,9 +1,10 @@
 package Dompoo.SpringCore.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
 //    private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -12,10 +13,10 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     //구현체는 외부에서 주입해준다.
-    @Autowired //@Component와 짝꿍, @Component로 빈 등록이 될 때 의존관계를 자동 주입해준다.
-    public MemberServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+//    @Autowired //@Component와 짝꿍, @Component로 빈 등록이 될 때 의존관계를 자동 주입해준다.
+//    public MemberServiceImpl(MemberRepository memberRepository) {
+//        this.memberRepository = memberRepository;
+//    }
 
     @Override
     public void join(Member member) {
