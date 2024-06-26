@@ -3,11 +3,11 @@ package Dompoo.SpringCore.order;
 import Dompoo.SpringCore.discount.DiscountPolicy;
 import Dompoo.SpringCore.member.Member;
 import Dompoo.SpringCore.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
 
@@ -21,11 +21,11 @@ public class OrderServiceImpl implements OrderService {
     private final DiscountPolicy discountPolicy;
 
     //구현체는 외부에서 주입해준다.
-//    @Autowired //@Component와 짝꿍, @Component로 빈 등록이 될 때 의존관계를 자동 주입해준다.
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    @Autowired //@Component와 짝꿍, @Component로 빈 등록이 될 때 의존관계를 자동 주입해준다.
+    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("rateDiscountPolicy") DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
