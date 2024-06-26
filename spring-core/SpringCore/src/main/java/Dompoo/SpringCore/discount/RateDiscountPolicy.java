@@ -2,7 +2,9 @@ package Dompoo.SpringCore.discount;
 
 import Dompoo.SpringCore.member.Grade;
 import Dompoo.SpringCore.member.Member;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RateDiscountPolicy implements DiscountPolicy {
 
     private final float discountRate = 0.1F;
