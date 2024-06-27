@@ -18,6 +18,8 @@ public class BeanLifeCycleTest {
 
     @Configuration
     static class LifeCycleConfig {
+
+//        @Bean(initMethod = "init", destroyMethod = "close") //외부 라이브러리의 경우 이와 같은 방법 사용
         @Bean
         public NetworkClient networkClient() {
 
