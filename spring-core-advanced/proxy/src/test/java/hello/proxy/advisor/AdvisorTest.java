@@ -11,6 +11,7 @@ import org.springframework.aop.MethodMatcher;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 
 import java.lang.reflect.Method;
 
@@ -82,6 +83,29 @@ public class AdvisorTest {
                     return false;
                 }
             };
+        }
+
+        @Test
+        @DisplayName("스프링이 제공하는 포인트컷")
+        void advisorTest3() {
+            ServiceInterface service = new ServiceImpl();
+
+            ProxyFactory proxyFactory = new ProxyFactory(service);
+
+            NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+            pointcut.setMappedName("save");
+            //보통 asspectJ 기반 포인트컷을 사용하게 되지만, 일단은 이런 NameMatch도 존재한다.
+
+            DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(
+                    pointcut,
+                    new TimeAdvice()
+            );
+            proxyFactory.addAdvisor(advisor);
+
+            ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
+
+            proxy.save();
+            proxy.find();
         }
 
 
