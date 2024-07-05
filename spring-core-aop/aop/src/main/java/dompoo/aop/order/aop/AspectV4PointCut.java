@@ -7,6 +7,9 @@ import org.aspectj.lang.annotation.Aspect;
 
 @Slf4j
 @Aspect
+//@Order(1)
+//Order를 통해 어드바이스 순서를 지정할 수 있으나,
+//클래스 단위로 작동하기 때문에 한 클래스의 여러 어드바이스 간에는 순서 지정이 불가하다.
 public class AspectV4PointCut {
 
     @Around("dompoo.aop.order.aop.Pointcuts.allOrder()")
