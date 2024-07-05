@@ -2,7 +2,7 @@ package dompoo.aop;
 
 import dompoo.aop.order.OrderRepository;
 import dompoo.aop.order.OrderService;
-import dompoo.aop.order.aop.AspectV5Order;
+import dompoo.aop.order.aop.AspectV6Advice;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
 
 @Slf4j
 @SpringBootTest
-@Import({AspectV5Order.LogAspect.class, AspectV5Order.TransactionAspect.class})
+@Import(AspectV6Advice.class)
 public class AopTest {
 
     @Autowired
