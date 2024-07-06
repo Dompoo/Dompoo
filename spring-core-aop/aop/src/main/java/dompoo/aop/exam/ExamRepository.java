@@ -1,5 +1,6 @@
 package dompoo.aop.exam;
 
+import dompoo.aop.exam.annotation.Retry;
 import dompoo.aop.exam.annotation.Trace;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,7 @@ public class ExamRepository {
 
     //5번에 1번 실패하는 요청
     @Trace
+    @Retry
     public String save(String itemId) {
         seq++;
         if (seq % 5 == 0) {
