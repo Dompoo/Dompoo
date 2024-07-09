@@ -1,0 +1,6 @@
+POST localhost:8080/request-body-string
+Content-Type: text/plain
+
+{
+  myname is lee and my age is 20
+}
