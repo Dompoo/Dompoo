@@ -4,3 +4,12 @@ Content-Type: text/plain
 {
   myname is lee and my age is 20
 }
+
+###
+POST localhost:8080/request-body-json
+Content-Type: application/json
+
+{
+  "username": "lee",
+  "age": 20
+}
