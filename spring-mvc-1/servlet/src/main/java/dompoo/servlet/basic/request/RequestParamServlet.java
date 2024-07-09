@@ -15,6 +15,13 @@ public class RequestParamServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //http://localhost:8080/request-param?username=hello&age=20
 
+        /*
+        브라우저는 데이터를
+        1. GET + 쿼리 파라미터 방식
+        2. POST + HTML Form 방식 (application/x-www-form-urlencoded)
+        두가지로 보내지만, 서블릿은 이것이 추상화되어 getParameter()로 조회할 수 있다.
+         */
+
         System.out.println("[전체 파라미터 조회]");
         request.getParameterNames().asIterator()
                 .forEachRemaining(paramName -> System.out.println(paramName + " = " + request.getParameter(paramName)));
