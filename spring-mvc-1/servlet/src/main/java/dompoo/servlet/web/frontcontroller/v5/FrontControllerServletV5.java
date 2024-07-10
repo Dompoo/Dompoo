@@ -5,7 +5,11 @@ import dompoo.servlet.web.frontcontroller.MyView;
 import dompoo.servlet.web.frontcontroller.v3.controller.MemberFormControllerV3;
 import dompoo.servlet.web.frontcontroller.v3.controller.MemberListControllerV3;
 import dompoo.servlet.web.frontcontroller.v3.controller.MemberSaveControllerV3;
+import dompoo.servlet.web.frontcontroller.v4.controller.MemberFormControllerV4;
+import dompoo.servlet.web.frontcontroller.v4.controller.MemberListControllerV4;
+import dompoo.servlet.web.frontcontroller.v4.controller.MemberSaveControllerV4;
 import dompoo.servlet.web.frontcontroller.v5.adapter.ControllerV3HandlerAdapter;
+import dompoo.servlet.web.frontcontroller.v5.adapter.ControllerV4HandlerAdapter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -45,6 +49,17 @@ public class FrontControllerServletV5 extends HttpServlet {
         MyView myView = viewResolver(modelView);
 
         myView.render(modelView.getModel(), request, response);
+
+        /*
+        1. 프론트컨트롤러에서 URL 매핑정보를 가지고 핸들러를 찾는다.
+        2. 핸들러를 가지고 핸들러어댑터를 찾는다.
+        3. 핸들러어댑터의 handle을 통해 핸들러를 실행한다.
+            4. 핸들러는 비즈니스 로직을 실행하고 ModelView을 반환한다.
+            (ModelView에는 논리이름과 모델이 들어있다.)
+        5. 프론트컨트롤러에서 해당 논리이름을 가지고 뷰리졸버를 호출한다.
+            6. 뷰 리졸버는 뷰를 반환한다.
+        7. 뷰를 render하여 model을 request에 담고 포워딩한다.
+         */
     }
 
     private static MyView viewResolver(ModelView modelView) {
@@ -66,11 +81,16 @@ public class FrontControllerServletV5 extends HttpServlet {
 
     private void initHandlerAdapters() {
         handlerAdapters.add(new ControllerV3HandlerAdapter());
+        handlerAdapters.add(new ControllerV4HandlerAdapter());
     }
 
     private void initHandlerMappingMap() {
         handlerMappingMap.put("/front-controller/v5/v3/members/new-form", new MemberFormControllerV3());
         handlerMappingMap.put("/front-controller/v5/v3/members/save", new MemberSaveControllerV3());
         handlerMappingMap.put("/front-controller/v5/v3/members", new MemberListControllerV3());
+
+        handlerMappingMap.put("/front-controller/v5/v4/members/new-form", new MemberFormControllerV4());
+        handlerMappingMap.put("/front-controller/v5/v4/members/save", new MemberSaveControllerV4());
+        handlerMappingMap.put("/front-controller/v5/v4/members", new MemberListControllerV4());
     }
 }
