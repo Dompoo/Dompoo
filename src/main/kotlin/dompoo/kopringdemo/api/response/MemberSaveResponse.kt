@@ -1,4 +1,4 @@
-package dompoo.kopringdemo.api.request
+package dompoo.kopringdemo.api.response
 
 import dompoo.kopringdemo.service.dto.MemberSaveDto
 
