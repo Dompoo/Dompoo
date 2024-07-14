@@ -1,37 +1,61 @@
 package dompoo.kopringdemo.service
 
-import com.ninjasquad.springmockk.MockkBean
+import dompoo.kopringdemo.api.MemberSaveRequest
 import dompoo.kopringdemo.domain.Member
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import io.mockk.every
 import io.mockk.mockk
-import org.springframework.boot.test.context.SpringBootTest
-import java.time.LocalDate
+import java.time.LocalDate.of
 
-@SpringBootTest
-class MemberServiceTest : BehaviorSpec() {
+class MemberServiceTest : BehaviorSpec({
 
-	@MockkBean
-	val memrepository = mockk<MemberRepository>()
-	@MockkBean
-	val memberService = mockk<MemberService>()
+	val memberRepository = mockk<MemberRepository>()
+	val memberService = MemberService(memberRepository)
 
-	init {
-		Given("이런게 주어졌을 때,") {
-			When("이렇게 하면,") {
-				Then("이렇게 되어야 한다.") {
-					1 + 2 shouldBe 3
+	Context("회원 저장") {
+		every { memberRepository.save(any()) } returns Member(
+			username = username,
+			birth = birth
+		)
+		every { memberRepository.existsByUsername("중복된 사용자명") } returns true
+		every { memberRepository.existsByUsername(not(eq("중복된 사용자명"))) } returns false
+
+		Given("정상적인 요청이 왔을 때") {
+			val request = MemberSaveRequest(
+				username = username,
+				birth = birth
+			)
+
+			When("저장하면") {
+				val savedMember = memberService.saveMember(request)
+
+				Then("정상적으로 저장되어야 한다.") {
+					savedMember.username shouldBe username
+				}
+			}
+		}
+
+		Given("중복된 사용자명으로 요청이 왔을 때") {
+			val request = MemberSaveRequest(
+				username = "중복된 사용자명",
+				birth = birth
+			)
+
+			When("저장을 시도하면") {
+				Then("예외가 터져야 한다.") {
+					val exception = shouldThrow<IllegalArgumentException> {
+						memberService.saveMember(request)
+					}
+					exception.message shouldBe "중복된 사용자명입니다."
 				}
 			}
 		}
 	}
-
-	fun createMember(
-		username: String = "dompoo",
-		birth: LocalDate = LocalDate.of(2000, 5, 17)
-	): Member =
-		Member(
-			username = username,
-			birth = birth
-		)
+}) {
+	companion object {
+		private const val username = "dompoo"
+		private val birth = of(2000, 5, 17)
+	}
 }
