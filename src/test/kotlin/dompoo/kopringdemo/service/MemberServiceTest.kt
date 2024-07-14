@@ -7,7 +7,10 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import org.springframework.data.repository.findByIdOrNull
+import java.time.LocalDate
 import java.time.LocalDate.of
+import java.time.Period
 
 class MemberServiceTest : BehaviorSpec({
 
@@ -28,7 +31,7 @@ class MemberServiceTest : BehaviorSpec({
 				birth = birth
 			)
 
-			When("저장하면") {
+			When("저장을 시도하면") {
 				val savedMember = memberService.saveMember(request)
 
 				Then("정상적으로 저장되어야 한다.") {
@@ -50,6 +53,38 @@ class MemberServiceTest : BehaviorSpec({
 					}
 					exception.message shouldBe "중복된 사용자명입니다."
 				}
+			}
+		}
+	}
+
+	Context("Id 회원 조회") {
+		every { memberRepository.findByIdOrNull(not(eq(-1))) } returns Member(
+			username = username,
+			birth = birth
+		)
+		every { memberRepository.findByIdOrNull(-1) } returns null
+
+		Given("존재하는 Id로 요청이 왔을 때") {
+			val id = 1L
+
+			When("조회를 시도하면") {
+				val result = memberService.findMemberById(id)
+				Then("정상적으로 조회되어야 한다.") {
+					result.username shouldBe username
+					result.birth shouldBe birth
+					result.age shouldBe Period.between(birth, LocalDate.now()).years
+				}
+			}
+		}
+		Given("존재하지 않는 Id로 요청이 왔을 때") {
+			val id = -1L
+
+			When("조회를 시도하면") {
+				Then("예외가 터져야 한다.")
+				val exception = shouldThrow<IllegalArgumentException> {
+					memberService.findMemberById(id)
+				}
+				exception.message shouldBe "해당하는 사용자가 없습니다."
 			}
 		}
 	}
