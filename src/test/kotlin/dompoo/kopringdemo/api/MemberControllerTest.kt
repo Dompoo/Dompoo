@@ -9,7 +9,6 @@ import dompoo.kopringdemo.service.MemberService
 import dompoo.kopringdemo.service.dto.MemberDto
 import dompoo.kopringdemo.service.dto.MemberSaveDto
 import io.kotest.core.spec.style.ExpectSpec
-import io.kotest.extensions.spring.SpringExtension
 import io.mockk.every
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -23,13 +22,11 @@ import java.time.LocalDate
 @WebMvcTest(MemberController::class)
 class MemberControllerTest : ExpectSpec() {
 
-	override fun extensions() = listOf(SpringExtension)
-
 	@Autowired
-	lateinit var mockMvc: MockMvc
+	private lateinit var mockMvc: MockMvc
 
 	@MockkBean
-	lateinit var memberService: MemberService
+	private lateinit var memberService: MemberService
 
 	private val objectMapper = ObjectMapper().registerModule(JavaTimeModule())
 
