@@ -1,6 +1,8 @@
 package dompoo.kopringdemo.service
 
 import dompoo.kopringdemo.api.MemberSaveRequest
+import dompoo.kopringdemo.api.exception.MemberNotFoundException
+import dompoo.kopringdemo.api.exception.UsernameDuplicationException
 import dompoo.kopringdemo.domain.Member
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -47,10 +49,11 @@ class MemberServiceTest : BehaviorSpec({
 			)
 
 			When("저장을 시도하면") {
-				Then("예외가 터져야 한다.") {
-					val exception = shouldThrow<IllegalArgumentException> {
+				Then("UsernameDuplicationException이 터져야 한다.") {
+					val exception = shouldThrow<UsernameDuplicationException> {
 						memberService.saveMember(request)
 					}
+					exception.code shouldBe 400
 					exception.message shouldBe "중복된 사용자명입니다."
 				}
 			}
@@ -80,11 +83,12 @@ class MemberServiceTest : BehaviorSpec({
 			val id = -1L
 
 			When("조회를 시도하면") {
-				Then("예외가 터져야 한다.")
-				val exception = shouldThrow<IllegalArgumentException> {
+				Then("MemberNotFoundException이 터져야 한다.")
+				val exception = shouldThrow<MemberNotFoundException> {
 					memberService.findMemberById(id)
 				}
-				exception.message shouldBe "해당하는 사용자가 없습니다."
+				exception.code shouldBe 404
+				exception.message shouldBe "존재하지 않는 사용자입니다."
 			}
 		}
 	}
