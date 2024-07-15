@@ -1,6 +1,8 @@
 package dompoo.kopringdemo.service
 
 import dompoo.kopringdemo.api.MemberSaveRequest
+import dompoo.kopringdemo.api.exception.MemberNotFoundException
+import dompoo.kopringdemo.api.exception.UsernameDuplicationException
 import dompoo.kopringdemo.domain.Member
 import dompoo.kopringdemo.service.dto.MemberDto
 import dompoo.kopringdemo.service.dto.MemberSaveDto
@@ -16,7 +18,7 @@ class MemberService(
 	): MemberSaveDto {
 
 		if (memberRepository.existsByUsername(request.username)) {
-			throw IllegalArgumentException("중복된 사용자명입니다.")
+			throw UsernameDuplicationException()
 		}
 
 		val member = Member(
@@ -31,7 +33,7 @@ class MemberService(
 		memberId: Long
 	): MemberDto {
 
-		val findMember = memberRepository.findByIdOrNull(memberId) ?: throw java.lang.IllegalArgumentException("해당하는 사용자가 없습니다.")
+		val findMember = memberRepository.findByIdOrNull(memberId) ?: throw MemberNotFoundException()
 
 		return MemberDto.from(findMember)
 	}
