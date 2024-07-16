@@ -1,7 +1,6 @@
 package dompoo.kopringdemo.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.ninjasquad.springmockk.MockkBean
 import dompoo.kopringdemo.api.exception.MemberNotFoundException
 import dompoo.kopringdemo.api.exception.UsernameDuplicationException
@@ -22,20 +21,18 @@ import java.time.LocalDate
 @WebMvcTest(MemberController::class)
 class MemberControllerTest : ExpectSpec() {
 
-	@Autowired
-	private lateinit var mockMvc: MockMvc
-
 	@MockkBean
 	private lateinit var memberService: MemberService
 
-	private val objectMapper = ObjectMapper().registerModule(JavaTimeModule())
+	@Autowired
+	private lateinit var mockMvc: MockMvc
+
+	@Autowired
+	private lateinit var objectMapper: ObjectMapper
 
 	init {
 		context("회원 저장") {
 			beforeTest {
-//			mockMvc = MockMvcBuilders
-//				.standaloneSetup(MemberController(memberService))
-//				.build()
 				every { memberService.saveMember(match {it.username != duplicatedUsername}) } returns MemberSaveResponse(
 					memberId = memberId,
 					username = username
