@@ -20,12 +20,14 @@ class MemberServiceTest : BehaviorSpec({
 	val memberService = MemberService(memberRepository)
 
 	Context("회원 저장") {
-		every { memberRepository.save(any()) } returns Member(
-			username = username,
-			birth = birth
-		)
-		every { memberRepository.existsByUsername("중복된 사용자명") } returns true
-		every { memberRepository.existsByUsername(not(eq("중복된 사용자명"))) } returns false
+		beforeTest {
+			every { memberRepository.save(any()) } returns Member(
+				username = username,
+				birth = birth
+			)
+			every { memberRepository.existsByUsername("중복된 사용자명") } returns true
+			every { memberRepository.existsByUsername(not(eq("중복된 사용자명"))) } returns false
+		}
 
 		Given("정상적인 요청이 왔을 때") {
 			val request = MemberSaveRequest(
@@ -61,11 +63,13 @@ class MemberServiceTest : BehaviorSpec({
 	}
 
 	Context("Id 회원 조회") {
-		every { memberRepository.findByIdOrNull(not(eq(-1))) } returns Member(
-			username = username,
-			birth = birth
-		)
-		every { memberRepository.findByIdOrNull(-1) } returns null
+		beforeTest {
+			every { memberRepository.findByIdOrNull(not(eq(-1))) } returns Member(
+				username = username,
+				birth = birth
+			)
+			every { memberRepository.findByIdOrNull(-1) } returns null
+		}
 
 		Given("존재하는 Id로 요청이 왔을 때") {
 			val id = 1L
