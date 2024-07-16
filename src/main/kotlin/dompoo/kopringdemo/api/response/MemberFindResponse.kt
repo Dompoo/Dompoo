@@ -1,6 +1,6 @@
 package dompoo.kopringdemo.api.response
 
-import dompoo.kopringdemo.service.dto.MemberDto
+import dompoo.kopringdemo.domain.Member
 import java.time.LocalDate
 
 data class MemberFindResponse(
@@ -10,11 +10,11 @@ data class MemberFindResponse(
 	val age: Int,
 ) {
 	companion object {
-		fun from(dto: MemberDto): MemberFindResponse = MemberFindResponse(
-			memberId = dto.memberId,
-			username = dto.username,
-			birth = dto.birth,
-			age = dto.age
+		fun from(member: Member): MemberFindResponse = MemberFindResponse(
+			memberId = member.id,
+			username = member.username,
+			birth = member.birth,
+			age = member.age
 		)
 	}
 }

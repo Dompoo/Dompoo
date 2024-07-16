@@ -12,10 +12,10 @@ class MemberController(
 ) {
 	@PostMapping("/member")
 	fun saveMember(@RequestBody request: MemberSaveRequest): ResponseEntity<MemberSaveResponse> =
-		ResponseEntity.ok().body(MemberSaveResponse.from(memberService.saveMember(request)))
+		ResponseEntity.ok().body(memberService.saveMember(request))
 
 	@GetMapping("/member/{id}")
 	fun findMember(@PathVariable id: Long): ResponseEntity<MemberFindResponse> =
-		ResponseEntity.ok().body(MemberFindResponse.from(memberService.findMemberById(id)))
+		ResponseEntity.ok().body(memberService.findMemberById(id))
 
 }

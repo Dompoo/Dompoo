@@ -5,9 +5,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.ninjasquad.springmockk.MockkBean
 import dompoo.kopringdemo.api.exception.MemberNotFoundException
 import dompoo.kopringdemo.api.exception.UsernameDuplicationException
+import dompoo.kopringdemo.api.response.MemberFindResponse
+import dompoo.kopringdemo.api.response.MemberSaveResponse
 import dompoo.kopringdemo.service.MemberService
-import dompoo.kopringdemo.service.dto.MemberDto
-import dompoo.kopringdemo.service.dto.MemberSaveDto
 import io.kotest.core.spec.style.ExpectSpec
 import io.mockk.every
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,14 +31,12 @@ class MemberControllerTest : ExpectSpec() {
 	private val objectMapper = ObjectMapper().registerModule(JavaTimeModule())
 
 	init {
-
-
 		context("회원 저장") {
 			beforeTest {
 //			mockMvc = MockMvcBuilders
 //				.standaloneSetup(MemberController(memberService))
 //				.build()
-				every { memberService.saveMember(match {it.username != duplicatedUsername}) } returns MemberSaveDto(
+				every { memberService.saveMember(match {it.username != duplicatedUsername}) } returns MemberSaveResponse(
 					memberId = memberId,
 					username = username
 				)
@@ -83,7 +81,7 @@ class MemberControllerTest : ExpectSpec() {
 
 		context("Id 회원 조회") {
 			beforeTest {
-				every { memberService.findMemberById(not(eq(notExistId))) } returns MemberDto(
+				every { memberService.findMemberById(not(eq(notExistId))) } returns MemberFindResponse(
 					memberId = memberId,
 					username = username,
 					birth = birth,
