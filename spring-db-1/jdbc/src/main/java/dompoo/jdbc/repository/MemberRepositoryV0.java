@@ -66,6 +66,69 @@ public class MemberRepositoryV0 {
 		}
 	}
 	
+	public int update(String memberId, int money) throws SQLException {
+		String sql = "update member set money = ? where member_id = ?";
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DBConnectionUtil.getConnection(); //DriverManager를 사용하여 connection 획득
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, money);
+			pstmt.setString(2, memberId);
+			
+			int effectedRow = pstmt.executeUpdate();
+			return effectedRow;
+		} catch (SQLException e) {
+			log.error("DB ERROR!!", e);
+			throw e;
+		} finally {
+			close(con, pstmt, null);
+		}
+	}
+	
+	public int delete(String memberId) throws SQLException {
+		String sql = "delete from member where member_id = ?";
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DBConnectionUtil.getConnection(); //DriverManager를 사용하여 connection 획득
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			
+			int effectedRow = pstmt.executeUpdate();
+			return effectedRow;
+		} catch (SQLException e) {
+			log.error("DB ERROR!!", e);
+			throw e;
+		} finally {
+			close(con, pstmt, null);
+		}
+	}
+	
+	public int deleteAll() throws SQLException {
+		String sql = "delete from member";
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DBConnectionUtil.getConnection(); //DriverManager를 사용하여 connection 획득
+			pstmt = con.prepareStatement(sql);
+			
+			int effectedRow = pstmt.executeUpdate();
+			return effectedRow;
+		} catch (SQLException e) {
+			log.error("DB ERROR!!", e);
+			throw e;
+		} finally {
+			close(con, pstmt, null);
+		}
+	}
+	
 	private void close(Connection con, Statement stmt, ResultSet rs) {
 		if (stmt != null) {
 			try {
