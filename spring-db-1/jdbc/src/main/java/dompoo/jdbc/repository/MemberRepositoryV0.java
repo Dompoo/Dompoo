@@ -5,6 +5,7 @@ import dompoo.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
+import java.util.NoSuchElementException;
 
 /**
  * JDBC - Driver Manager
@@ -33,6 +34,35 @@ public class MemberRepositoryV0 {
 			// 닫을 때는 역순으로 닫아준다.
 			// 단, 첫번째 close에서 예외가 발생하더라도 나머지가 닫혀야 하므로 try catch를 또 써야 한다.
 			close(con, pstmt, null);
+		}
+	}
+	
+	public Member findById(String memberId) throws SQLException {
+		String sql = "select * from member where member_id = ?";
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DBConnectionUtil.getConnection(); //DriverManager를 사용하여 connection 획득
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Member member = new Member();
+				member.setMemberId(rs.getString("member_id"));
+				member.setMoney(rs.getInt("money"));
+				return member;
+			} else {
+				throw new NoSuchElementException();
+			}
+		} catch (SQLException e) {
+			log.error("DB ERROR!!", e);
+			throw e;
+		} finally {
+			close(con, pstmt, rs);
 		}
 	}
 	
