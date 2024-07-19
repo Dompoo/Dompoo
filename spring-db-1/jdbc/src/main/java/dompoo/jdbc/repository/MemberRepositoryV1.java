@@ -137,6 +137,9 @@ public class MemberRepositoryV1 {
 	private void close(Connection con, Statement stmt, ResultSet rs) {
 		JdbcUtils.closeResultSet(rs);
 		JdbcUtils.closeStatement(stmt);
+		
+		// HikariProxyConnection 으로 래핑된 커넥션이기 때문에,
+		// 커넥션이 닫히지 않고 풀에 반환된다.
 		JdbcUtils.closeConnection(con);
 	}
 	
