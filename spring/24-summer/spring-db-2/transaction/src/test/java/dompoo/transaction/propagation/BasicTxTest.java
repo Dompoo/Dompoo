@@ -101,24 +101,36 @@ public class BasicTxTest {
     간단히 말하면, 외부 트랜잭션이 '진짜 트랜잭션'이다.
      */
     @Test
-    void innerCommit() {
+    void outerCommitInnerCommit() {
         log.info("외부 트랜잭션 시작");
         TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
         log.info("외부 isNewTransaction : {}", outer.isNewTransaction());
         
-        innerTransactionMethod();
+        log.info("내부 트랜잭션 시작");
+        TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("내부 isNewTransaction : {}", inner.isNewTransaction());
+        log.info("내부 커밋"); // 물리 트랜잭션의 커밋은 외부 트랜잭션의 커밋 시점까지 미뤄진다.
+        txManager.commit(inner);
         
         log.info("외부 커밋");
         txManager.commit(outer);
     }
     
-    private void innerTransactionMethod() {
+    // 외부가 롤백되면 너무 당연하게 전체 롤백된다.
+    @Test
+    void outerRollbackInnerCommit() {
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("외부 isNewTransaction : {}", outer.isNewTransaction());
+        
         log.info("내부 트랜잭션 시작");
         TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
         log.info("내부 isNewTransaction : {}", inner.isNewTransaction());
-        
-        log.info("내부 커밋"); // 물리 트랜잭션의 커밋은 외부 트랜잭션의 커밋 시점까지 미뤄진다.
+        log.info("내부 커밋");
         txManager.commit(inner);
+        
+        log.info("외부 롤백");
+        txManager.rollback(outer);
     }
     
     
