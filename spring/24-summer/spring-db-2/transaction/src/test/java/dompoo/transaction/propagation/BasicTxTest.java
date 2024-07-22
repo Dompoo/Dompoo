@@ -1,5 +1,7 @@
 package dompoo.transaction.propagation;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
 @Slf4j
@@ -99,6 +102,11 @@ public class BasicTxTest {
     기존 트랜잭션에 참여하기만 한 내부 트랜잭션에서는 실제 커밋이 이뤄지지 않는다.
     실제 커밋은 외부 트랜잭션의 커밋시점으로 미뤄진다.
     간단히 말하면, 외부 트랜잭션이 '진짜 트랜잭션'이다.
+    
+    각 트랜잭션이 자신이 진짜인지 참여인지 확인하는 것은 자신의
+    isNewTransactio=true 여부를 확인하여 알 수 있다.
+    만약 자신이 새로운 트랜잭션이라는 것은 진짜 트랜잭션이라는 것이고,
+    동시에 실제 커밋/롤백을 호출해야 한다는 것이다.
      */
     @Test
     void outerCommitInnerCommit() {
@@ -131,6 +139,30 @@ public class BasicTxTest {
         
         log.info("외부 롤백");
         txManager.rollback(outer);
+    }
+    
+    /*
+    내부에서 롤백되면 전체 트랜잭션에 rollbackOnly=true로 표시를 해놓는다.
+    내부는 실제 트랜잭션을 가지고 있지 않기 때문에, 이렇게 표시만 해놓는 것이다.
+    이때, 외부에서 커밋을 하면 UnexpectedRollbackException예외가 발생한다.
+    기대하지 않는 롤백을 알리는 예외인 것이다.
+     */
+    @Test
+    void outerCommitInnerRollback() {
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("외부 isNewTransaction : {}", outer.isNewTransaction());
+        
+        log.info("내부 트랜잭션 시작");
+        TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("내부 isNewTransaction : {}", inner.isNewTransaction());
+        log.info("내부 롤백");
+        txManager.rollback(inner);
+        
+        log.info("외부 커밋");
+        assertThatThrownBy(() ->
+            txManager.commit(outer))
+            .isExactlyInstanceOf(UnexpectedRollbackException.class);
     }
     
     
