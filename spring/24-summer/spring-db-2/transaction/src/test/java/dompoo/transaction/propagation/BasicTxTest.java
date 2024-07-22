@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
@@ -163,6 +164,30 @@ public class BasicTxTest {
         assertThatThrownBy(() ->
             txManager.commit(outer))
             .isExactlyInstanceOf(UnexpectedRollbackException.class);
+    }
+    
+    /*
+    REQUIRES_NEW 로 옵션을 주면,
+    내/외부 없이 각각 새로운 물리 트랜잭션이 된다.
+    단, 외부 트랜잭션에서 내부 트랜잭션으로 넘어갈 때,
+    외부 트랜잭션의 Jdbc 커넥션은 잠시 보류 된다.
+     */
+    @Test
+    void outerCommitInnerRollback_RequiresNew() {
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("외부 isNewTransaction : {}", outer.isNewTransaction()); //true
+        
+        log.info("내부 트랜잭션 시작");
+        DefaultTransactionAttribute attribute = new DefaultTransactionAttribute();
+        attribute.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        TransactionStatus inner = txManager.getTransaction(attribute);
+        log.info("내부 isNewTransaction : {}", inner.isNewTransaction()); //true
+        log.info("내부 롤백");
+        txManager.rollback(inner);
+        
+        log.info("외부 커밋");
+        txManager.commit(outer);
     }
     
     
