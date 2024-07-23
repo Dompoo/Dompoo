@@ -83,4 +83,22 @@ class MemberServiceTest {
         assertThat(logRepository.findByMessage(username)).isPresent();
     }
     
+    /*
+    MemberService       @Transactional
+    MemberRepository    @Transactional
+    LogRepository       @Transactional
+    */
+    @Test
+    void outerTxOn_success() {
+        //given
+        String username = "outerTxOn_success";
+        
+        //when
+        memberService.joinV1(username);
+        
+        //then
+        assertThat(memberRepository.findByUsername(username)).isPresent();
+        assertThat(logRepository.findByMessage(username)).isPresent();
+    }
+    
 }
