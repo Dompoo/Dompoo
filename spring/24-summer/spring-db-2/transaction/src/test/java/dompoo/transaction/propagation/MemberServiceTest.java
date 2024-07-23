@@ -158,4 +158,33 @@ class MemberServiceTest {
         assertThat(logRepository.findByMessage(username)).isEmpty();
     }
     
+    /*
+    MemberService       @Transactional  Exception 처리
+    MemberRepository    @Transactional
+    LogRepository       @Transactional(REQUIRES_NEW)  Exception 발생
+    
+    LogRepository는 @Transactional(REQUIRES_NEW)이기 때문에
+    아예 새로운 물리 트랜잭션에서 실행된다. (DB 커넥션도 새로 생성)
+    LogRepository에서 예외가 터지더라도, 그 부분만 롤백된다.
+    올라온 예외는 LogService에서 처리되고, LogRepository에서는 정상흐름이 반환된다.
+    LogRepository proxy에서는 정상흐름이며 새로운 트랜잭션이며 rollbackOnly=false이므로
+    커밋한다.
+    
+    단점도 있다. 하나의 요청에서 커넥션을 두개 사용한다는 점이다. 커넥션 풀도 두개를 사용하게 된다.
+    이를 처리하기 위해서는 트랜잭션이 걸리는 서비스 계층 앞단에 새로운 계층을 두면, 첫번째 커넥션을
+    다 사용하고 나서 다음 커넥션을 사용하게 되기 때문에 단점은 없어지지만, 구조가 복잡해진다는 단점이 있다. 알아서 잘 선택해서 쓰자!
+    */
+    @Test
+    void recoverEx_success() {
+        //given
+        String username = "recoverEx_success_로그예외";
+        
+        //when
+        memberService.joinV2(username);
+        
+        //then 둘다 저장
+        assertThat(memberRepository.findByUsername(username)).isPresent();
+        assertThat(logRepository.findByMessage(username)).isEmpty();
+    }
+    
 }
