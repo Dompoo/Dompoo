@@ -61,4 +61,26 @@ class MemberServiceTest {
         assertThat(logRepository.findByMessage(username)).isEmpty();
     }
     
+    /*
+    MemberService       @Transactional
+    MemberRepository
+    LogRepository
+    둘다 저장
+    전체가 하나의 트랜잭션이다.
+    하지만, 만약에 다른 서비스(클라이언트)에서 리포지토리만 사용하고 싶은 상황에서는?
+    트랜잭션을 적용할 수 없다. -> 트랜잭션 전파를 활용하면?
+     */
+    @Test
+    void singleTx_success() {
+        //given
+        String username = "singleTx_success";
+        
+        //when
+        memberService.joinV1(username);
+        
+        //then
+        assertThat(memberRepository.findByUsername(username)).isPresent();
+        assertThat(logRepository.findByMessage(username)).isPresent();
+    }
+    
 }
