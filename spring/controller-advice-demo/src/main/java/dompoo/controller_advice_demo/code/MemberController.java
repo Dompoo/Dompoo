@@ -11,7 +11,7 @@ public class MemberController {
 	
 	private final MemberService memberService;
 	
-	@GetMapping("/demo")
+	@GetMapping
 	public ResponseEntity<String> demo() {
 		String value = memberService.doLogic();
 		return ResponseEntity.ok().body(value);

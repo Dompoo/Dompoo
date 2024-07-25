@@ -1,5 +1,9 @@
 package dompoo.controller_advice_demo.code;
 
+import static dompoo.controller_advice_demo.exception.ErrorEnum.*;
+
+import dompoo.controller_advice_demo.exception.ErrorEnum;
+import dompoo.controller_advice_demo.exception.MyException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,9 +15,12 @@ public class MemberService {
 		count++;
 		
 		if (count % 5 == 0) {
-			throw new IllegalStateException("count가 5의 배수입니다.");
+			throw new MyException(COUNT_IS_FIVE_MUL);
 		} else {
 			return "현재 count : " + count;
 		}
+		
 	}
+	
+	
 }

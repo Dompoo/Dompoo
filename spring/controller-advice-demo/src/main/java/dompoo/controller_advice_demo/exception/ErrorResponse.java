@@ -1,19 +1,16 @@
 package dompoo.controller_advice_demo.exception;
 
-import lombok.Getter;
-
-@Getter
 public class ErrorResponse {
     
-    private final ErrorType errorType;
-    private final String message;
+    public final String errorCode;
+    public final String message;
     
-    private ErrorResponse(ErrorType errorType, String message) {
-        this.errorType = errorType;
+    private ErrorResponse(String errorCode, String message) {
+        this.errorCode = errorCode;
         this.message = message;
     }
     
-    public static ErrorResponse fromErrorType(ErrorType errorType) {
-        return new ErrorResponse(errorType, errorType.getMessage());
+    public static ErrorResponse makeErrorResponseFromException(MyException e) {
+        return new ErrorResponse(e.getErrorCode(), e.getMessage());
     }
 }

@@ -1,15 +1,19 @@
 package dompoo.controller_advice_demo.exception;
 
-public abstract class MyException extends RuntimeException {
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@Getter
+public class MyException extends RuntimeException {
     
-    private ErrorType errorType;
+    private String errorCode;
+    private String message;
+    private HttpStatus status;
     
-    public MyException(ErrorType errorType) {
-        super(errorType.getMessage());
-        this.errorType = errorType;
-    }
-    
-    public ErrorType getErrorType() {
-        return errorType;
+    public MyException(ErrorEnum errorEnum) {
+        super(errorEnum.getMessage());
+        this.errorCode = errorEnum.getErrorCode();
+        this.message = errorEnum.getMessage();
+        this.status = errorEnum.getStatus();
     }
 }
