@@ -16,7 +16,7 @@ public class CafeKiosk {
         beverages.add(beverage);
     }
     
-    public void delete(Beverage beverage) {
+    public void remove(Beverage beverage) {
         beverages.remove(beverage);
     }
     

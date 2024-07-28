@@ -1,6 +1,9 @@
 package dompoo.cafekiosk.unit;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import dompoo.cafekiosk.unit.beverages.Americano;
+import dompoo.cafekiosk.unit.beverages.Latte;
 import org.junit.jupiter.api.Test;
 
 /*
@@ -13,12 +16,44 @@ import org.junit.jupiter.api.Test;
 class CafeKioskTest {
     
     @Test
-    void add() {
+    void add_manual() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         cafeKiosk.add(new Americano());
         
         System.out.println(">>> 담긴 음료 수 : " + cafeKiosk.getBeverages().size());
         System.out.println(">>> 담긴 음료 수 : " + cafeKiosk.getBeverages().getFirst().getName());
+    }
+    
+    @Test
+    void add() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        
+        cafeKiosk.add(new Americano());
+        
+        assertThat(cafeKiosk.getBeverages()).hasSize(1);
+        assertThat(cafeKiosk.getBeverages().getFirst()).isExactlyInstanceOf(Americano.class);
+    }
+    
+    @Test
+    void remove() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        cafeKiosk.add(americano);
+        
+        cafeKiosk.remove(americano);
+        
+        assertThat(cafeKiosk.getBeverages()).isEmpty();
+    }
+    
+    @Test
+    void deleteAll() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        cafeKiosk.add(new Americano());
+        cafeKiosk.add(new Latte());
+        
+        cafeKiosk.deleteAll();
+        
+        assertThat(cafeKiosk.getBeverages()).isEmpty();
     }
     
 }
