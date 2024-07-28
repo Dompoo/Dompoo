@@ -1,6 +1,7 @@
 package dompoo.cafekiosk.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import dompoo.cafekiosk.unit.beverages.Americano;
 import dompoo.cafekiosk.unit.beverages.Latte;
@@ -32,6 +33,37 @@ class CafeKioskTest {
         
         assertThat(cafeKiosk.getBeverages()).hasSize(1);
         assertThat(cafeKiosk.getBeverages().getFirst()).isExactlyInstanceOf(Americano.class);
+    }
+    
+    @Test
+    void addSeveralBeverages() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        
+        cafeKiosk.add(new Americano(), 2);
+        
+        assertThat(cafeKiosk.getBeverages()).hasSize(2);
+        assertThat(cafeKiosk.getBeverages().get(0)).isExactlyInstanceOf(Americano.class);
+        assertThat(cafeKiosk.getBeverages().get(1)).isExactlyInstanceOf(Americano.class);
+    }
+    
+    @Test
+    void addOneBeverages() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        
+        cafeKiosk.add(new Americano(), 1);
+        
+        assertThat(cafeKiosk.getBeverages()).hasSize(1);
+        assertThat(cafeKiosk.getBeverages().get(0)).isExactlyInstanceOf(Americano.class);
+    }
+    
+    @Test
+    void addZeroBeverages() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        
+        assertThatThrownBy(() ->
+            cafeKiosk.add(new Americano(), 0))
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("음료는 한잔 이상 주문하실 수 있습니다.");
     }
     
     @Test
