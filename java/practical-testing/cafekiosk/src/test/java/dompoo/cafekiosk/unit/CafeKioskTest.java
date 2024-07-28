@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import dompoo.cafekiosk.unit.beverages.Americano;
 import dompoo.cafekiosk.unit.beverages.Latte;
+import dompoo.cafekiosk.unit.order.Order;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 /*
@@ -87,5 +89,53 @@ class CafeKioskTest {
         
         assertThat(cafeKiosk.getBeverages()).isEmpty();
     }
+    
+/*
+    @Test
+    void createTest() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        cafeKiosk.add(new Americano());
+
+        Order order = cafeKiosk.createOrder(); // 항상 성공하는 테스트는 아니다.
+
+        assertThat(order.getBeverages()).hasSize(1);
+        assertThat(order.getBeverages().getFirst()).isExactlyInstanceOf(Americano.class);
+    }
+*/
+    
+    @Test
+    void createTestWithCurTime() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        cafeKiosk.add(new Americano());
+        
+        Order order = cafeKiosk.createOrder(LocalDateTime.of(2024, 7, 28, 10, 0));
+        
+        assertThat(order.getBeverages()).hasSize(1);
+        assertThat(order.getBeverages().getFirst()).isExactlyInstanceOf(Americano.class);
+    }
+    
+    @Test
+    void createTestBeforeShopOpen() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        cafeKiosk.add(new Americano());
+        
+        assertThatThrownBy(() ->
+            cafeKiosk.createOrder(LocalDateTime.of(2024, 7, 28, 9, 59)))
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("주문 시간이 아닙니다.");
+    }
+    
+    @Test
+    void createTestAfterShopClose() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        cafeKiosk.add(new Americano());
+        
+        assertThatThrownBy(() ->
+            cafeKiosk.createOrder(LocalDateTime.of(2024, 7, 28, 22, 1)))
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("주문 시간이 아닙니다.");
+    }
+    
+    
     
 }
