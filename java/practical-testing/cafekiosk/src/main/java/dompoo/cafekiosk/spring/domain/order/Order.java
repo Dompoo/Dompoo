@@ -36,7 +36,7 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts = new ArrayList<>();
     
-    public Order(List<Product> products, LocalDateTime now) {
+    private Order(List<Product> products, LocalDateTime now) {
         this.status = OrderStatus.INIT;
         this.totalPrice = calculateTotalPrice(products);
         this.registedDateTime = now;

@@ -7,11 +7,14 @@ import static org.assertj.core.api.Assertions.tuple;
 
 import dompoo.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
 import dompoo.cafekiosk.spring.api.service.order.response.OrderResponse;
+import dompoo.cafekiosk.spring.domain.order.OrderRepository;
+import dompoo.cafekiosk.spring.domain.orderproduct.OrderProductRepository;
 import dompoo.cafekiosk.spring.domain.product.Product;
 import dompoo.cafekiosk.spring.domain.product.ProductRepository;
 import dompoo.cafekiosk.spring.domain.product.ProductType;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,18 @@ class OrderServiceTest {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private OrderProductRepository orderProductRepository;
+    @Autowired
     private OrderService orderService;
+    
+    @AfterEach
+    void tearDown() {
+        orderProductRepository.deleteAllInBatch();
+        productRepository.deleteAllInBatch();
+        orderRepository.deleteAllInBatch();
+    }
     
     @Test
     @DisplayName("주문 번호 리스트를 받으면 주문을 생성해야 한다.")
@@ -53,6 +67,35 @@ class OrderServiceTest {
             .containsExactlyInAnyOrder(
                 tuple("001", 1000),
                 tuple("002", 3000)
+            );
+    }
+    
+    @Test
+    @DisplayName("중복되는 제품번호로 주문할 수 있어야 한다.")
+    void createOrderByDuplicatedNumber() {
+        //given
+        Product product1 = createProduct("001", HANDMADE, 1000);
+        Product product2 = createProduct("002", HANDMADE, 3000);
+        Product product3 = createProduct("003", HANDMADE, 5000);
+        productRepository.saveAll(List.of(product1, product2, product3));
+        OrderCreateRequest request = OrderCreateRequest.builder()
+            .productNumbers(List.of("001", "001"))
+            .build();
+        LocalDateTime now = LocalDateTime.now();
+        
+        //when
+        OrderResponse response = orderService.createOrder(request, now);
+        
+        //then
+        assertThat(response.getId()).isNotNull();
+        assertThat(response)
+            .extracting("registeredDateTime", "totalPrice")
+            .contains(now, 2000);
+        assertThat(response.getProducts()).hasSize(2)
+            .extracting("productNumber", "price")
+            .containsExactlyInAnyOrder(
+                tuple("001", 1000),
+                tuple("001", 1000)
             );
     }
     

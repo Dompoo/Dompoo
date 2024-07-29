@@ -14,7 +14,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 //@SpringBootTest
-@DataJpaTest //JPA 관련된 빈들만 로딩하기 때문에 좀 더 빠르다.
+@DataJpaTest
+//JPA 관련된 빈들만 로딩하기 때문에 좀 더 빠르다.
+//자동으로 트랜잭션 롤백을 통한 clear를 해준다.
 @ActiveProfiles("test")
 class ProductRepositoryTest {
     

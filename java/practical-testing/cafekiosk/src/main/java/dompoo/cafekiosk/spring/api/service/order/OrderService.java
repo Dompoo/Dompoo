@@ -8,6 +8,8 @@ import dompoo.cafekiosk.spring.domain.product.Product;
 import dompoo.cafekiosk.spring.domain.product.ProductRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +26,15 @@ public class OrderService {
         // Product
         List<Product> products = productRepository.findAllByProductNumberIn(productNumbers);
         
+        Map<String, Product> productMap = products.stream()
+            .collect(Collectors.toMap(Product::getProductNumber, product -> product));
+        
+        List<Product> productsWithDuplicate = productNumbers.stream()
+            .map(productMap::get)
+            .toList();
+        
         // Order
-        Order order = Order.create(products, now);
+        Order order = Order.create(productsWithDuplicate, now);
         Order savedOrder = orderRepository.save(order);
         
         return OrderResponse.of(savedOrder);
