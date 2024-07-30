@@ -1,4 +1,4 @@
-package dompoo.cafekiosk;
+package dompoo.cafekiosk.spring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
