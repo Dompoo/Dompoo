@@ -9,16 +9,18 @@ import dompoo.cafekiosk.spring.domain.product.ProductRepository;
 import dompoo.cafekiosk.spring.domain.product.ProductType;
 import dompoo.cafekiosk.spring.domain.stock.Stock;
 import dompoo.cafekiosk.spring.domain.stock.StockRepository;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OrderService {
     
     private final ProductRepository productRepository;
