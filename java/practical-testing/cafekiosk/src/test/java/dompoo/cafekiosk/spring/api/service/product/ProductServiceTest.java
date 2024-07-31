@@ -1,6 +1,6 @@
 package dompoo.cafekiosk.spring.api.service.product;
 
-import dompoo.cafekiosk.spring.api.controller.product.dto.request.ProductCreateRequest;
+import dompoo.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import dompoo.cafekiosk.spring.api.service.product.response.ProductResponse;
 import dompoo.cafekiosk.spring.domain.product.Product;
 import dompoo.cafekiosk.spring.domain.product.ProductRepository;
