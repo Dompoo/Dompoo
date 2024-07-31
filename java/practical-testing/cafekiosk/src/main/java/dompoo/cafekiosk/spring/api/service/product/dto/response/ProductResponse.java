@@ -1,4 +1,4 @@
-package dompoo.cafekiosk.spring.api.service.product.response;
+package dompoo.cafekiosk.spring.api.service.product.dto.response;
 
 import dompoo.cafekiosk.spring.domain.product.Product;
 import dompoo.cafekiosk.spring.domain.product.ProductSellingStatus;

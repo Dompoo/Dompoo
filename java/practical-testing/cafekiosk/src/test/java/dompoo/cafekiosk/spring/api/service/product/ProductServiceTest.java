@@ -1,7 +1,7 @@
 package dompoo.cafekiosk.spring.api.service.product;
 
-import dompoo.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
-import dompoo.cafekiosk.spring.api.service.product.response.ProductResponse;
+import dompoo.cafekiosk.spring.api.service.product.dto.request.ProductCreateServiceRequest;
+import dompoo.cafekiosk.spring.api.service.product.dto.response.ProductResponse;
 import dompoo.cafekiosk.spring.domain.product.Product;
 import dompoo.cafekiosk.spring.domain.product.ProductRepository;
 import dompoo.cafekiosk.spring.domain.product.ProductSellingStatus;
@@ -63,7 +63,7 @@ class ProductServiceTest {
         //given
         Product product = createProduct("001", HANDMADE, SELLING, 4000, "아메리카노");
         productRepository.save(product);
-        ProductCreateRequest request = ProductCreateRequest.builder()
+        ProductCreateServiceRequest request = ProductCreateServiceRequest.builder()
                 .name("밤양갱")
                 .price(3000)
                 .type(HANDMADE)
@@ -89,7 +89,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품이 아무것도 없을 때 상품을 등록하면 001번호로 등록된다.")
     void createProductInEmpty() {
-        ProductCreateRequest request = ProductCreateRequest.builder()
+        ProductCreateServiceRequest request = ProductCreateServiceRequest.builder()
                 .name("밤양갱")
                 .price(3000)
                 .type(HANDMADE)

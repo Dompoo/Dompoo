@@ -3,7 +3,7 @@ package dompoo.cafekiosk.spring.api.controller.product;
 import dompoo.cafekiosk.spring.api.ApiResponse;
 import dompoo.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import dompoo.cafekiosk.spring.api.service.product.ProductService;
-import dompoo.cafekiosk.spring.api.service.product.response.ProductResponse;
+import dompoo.cafekiosk.spring.api.service.product.dto.response.ProductResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class ProductController {
     
     @PostMapping("/api/v1/products/new")
     public ApiResponse<ProductResponse> createProduct(@RequestBody @Valid ProductCreateRequest request) {
-        return ApiResponse.ok(productService.createProduct(request));
+        return ApiResponse.ok(productService.createProduct(request.toServiceRequest()));
     }
     
     @GetMapping("/api/v1/products/selling")

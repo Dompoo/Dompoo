@@ -1,11 +1,12 @@
-package dompoo.cafekiosk.spring.api.service.order.response;
+package dompoo.cafekiosk.spring.api.service.order.dto.response;
 
-import dompoo.cafekiosk.spring.api.service.product.response.ProductResponse;
+import dompoo.cafekiosk.spring.api.service.product.dto.response.ProductResponse;
 import dompoo.cafekiosk.spring.domain.order.Order;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class OrderResponse {

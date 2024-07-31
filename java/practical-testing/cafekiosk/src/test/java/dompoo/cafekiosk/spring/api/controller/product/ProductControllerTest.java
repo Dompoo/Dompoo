@@ -3,7 +3,7 @@ package dompoo.cafekiosk.spring.api.controller.product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dompoo.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import dompoo.cafekiosk.spring.api.service.product.ProductService;
-import dompoo.cafekiosk.spring.api.service.product.response.ProductResponse;
+import dompoo.cafekiosk.spring.api.service.product.dto.response.ProductResponse;
 import dompoo.cafekiosk.spring.domain.product.ProductSellingStatus;
 import dompoo.cafekiosk.spring.domain.product.ProductType;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -39,6 +40,9 @@ class ProductControllerTest {
 	@DisplayName("신규 상품을 등록한다.")
 	void createProduct() throws Exception {
 		//given
+		ProductResponse response = ProductResponse.builder().build();
+		when(productService.createProduct(any())).thenReturn(response);
+		
 		ProductCreateRequest request = ProductCreateRequest.builder()
 				.name("아메리카노")
 				.sellingStatus(ProductSellingStatus.SELLING)
@@ -54,7 +58,7 @@ class ProductControllerTest {
 				.andExpect(jsonPath("$.code").value(200))
 				.andExpect(jsonPath("$.status").value("OK"))
 				.andExpect(jsonPath("$.message").value("OK"))
-				.andExpect(jsonPath("$.data").isArray())
+				.andExpect(jsonPath("$.data").isNotEmpty())
 				.andDo(print());
 	}
 	

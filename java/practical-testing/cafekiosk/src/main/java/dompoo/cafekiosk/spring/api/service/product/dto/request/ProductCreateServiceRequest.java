@@ -1,6 +1,6 @@
-package dompoo.cafekiosk.spring.api.controller.product.request;
+package dompoo.cafekiosk.spring.api.service.product.dto.request;
 
-import dompoo.cafekiosk.spring.api.service.product.dto.request.ProductCreateServiceRequest;
+import dompoo.cafekiosk.spring.domain.product.Product;
 import dompoo.cafekiosk.spring.domain.product.ProductSellingStatus;
 import dompoo.cafekiosk.spring.domain.product.ProductType;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ProductCreateRequest {
+public class ProductCreateServiceRequest {
     
     @NotBlank(message = "상품 이름은 필수입니다.")
     private String name;
@@ -27,15 +27,16 @@ public class ProductCreateRequest {
     private int price;
     
     @Builder
-    private ProductCreateRequest(String name, ProductType type, ProductSellingStatus sellingStatus, int price) {
+    private ProductCreateServiceRequest(String name, ProductType type, ProductSellingStatus sellingStatus, int price) {
         this.name = name;
         this.type = type;
         this.sellingStatus = sellingStatus;
         this.price = price;
     }
     
-    public ProductCreateServiceRequest toServiceRequest() {
-        return ProductCreateServiceRequest.builder()
+    public Product toProduct(String nextProductNumber) {
+        return Product.builder()
+                .productNumber(nextProductNumber)
                 .name(name)
                 .type(type)
                 .sellingStatus(sellingStatus)

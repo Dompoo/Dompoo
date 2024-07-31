@@ -3,7 +3,7 @@ package dompoo.cafekiosk.spring.api.controller.order;
 import dompoo.cafekiosk.spring.api.ApiResponse;
 import dompoo.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
 import dompoo.cafekiosk.spring.api.service.order.OrderService;
-import dompoo.cafekiosk.spring.api.service.order.response.OrderResponse;
+import dompoo.cafekiosk.spring.api.service.order.dto.response.OrderResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +21,6 @@ public class OrderController {
     @PostMapping("/api/v1/orders/new")
     public ApiResponse<OrderResponse> createOrder(@RequestBody @Valid OrderCreateRequest request) {
         LocalDateTime registerdDateTime = LocalDateTime.now();
-        return ApiResponse.ok(orderService.createOrder(request, registerdDateTime));
+        return ApiResponse.ok(orderService.createOrder(request.toServiceRequest(), registerdDateTime));
     }
 }

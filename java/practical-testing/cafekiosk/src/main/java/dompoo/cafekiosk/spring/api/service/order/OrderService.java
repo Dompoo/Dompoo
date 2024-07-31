@@ -1,7 +1,7 @@
 package dompoo.cafekiosk.spring.api.service.order;
 
-import dompoo.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
-import dompoo.cafekiosk.spring.api.service.order.response.OrderResponse;
+import dompoo.cafekiosk.spring.api.service.order.dto.request.OrderCreateServiceRequest;
+import dompoo.cafekiosk.spring.api.service.order.dto.response.OrderResponse;
 import dompoo.cafekiosk.spring.domain.order.Order;
 import dompoo.cafekiosk.spring.domain.order.OrderRepository;
 import dompoo.cafekiosk.spring.domain.product.Product;
@@ -28,7 +28,7 @@ public class OrderService {
     private final StockRepository stockRepository;
     
     @Transactional
-    public OrderResponse createOrder(OrderCreateRequest request, LocalDateTime now) {
+    public OrderResponse createOrder(OrderCreateServiceRequest request, LocalDateTime now) {
         List<String> productNumbers = request.getProductNumbers();
         List<Product> products = productRepository.findAllByProductNumberIn(productNumbers);
         

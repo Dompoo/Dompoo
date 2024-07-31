@@ -1,15 +1,7 @@
 package dompoo.cafekiosk.spring.api.service.order;
 
-import static dompoo.cafekiosk.spring.domain.product.ProductSellingStatus.SELLING;
-import static dompoo.cafekiosk.spring.domain.product.ProductType.BAKERY;
-import static dompoo.cafekiosk.spring.domain.product.ProductType.BOTTLE;
-import static dompoo.cafekiosk.spring.domain.product.ProductType.HANDMADE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.tuple;
-
-import dompoo.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
-import dompoo.cafekiosk.spring.api.service.order.response.OrderResponse;
+import dompoo.cafekiosk.spring.api.service.order.dto.request.OrderCreateServiceRequest;
+import dompoo.cafekiosk.spring.api.service.order.dto.response.OrderResponse;
 import dompoo.cafekiosk.spring.domain.order.OrderRepository;
 import dompoo.cafekiosk.spring.domain.orderproduct.OrderProductRepository;
 import dompoo.cafekiosk.spring.domain.product.Product;
@@ -17,14 +9,19 @@ import dompoo.cafekiosk.spring.domain.product.ProductRepository;
 import dompoo.cafekiosk.spring.domain.product.ProductType;
 import dompoo.cafekiosk.spring.domain.stock.Stock;
 import dompoo.cafekiosk.spring.domain.stock.StockRepository;
-import java.time.LocalDateTime;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static dompoo.cafekiosk.spring.domain.product.ProductSellingStatus.SELLING;
+import static dompoo.cafekiosk.spring.domain.product.ProductType.*;
+import static org.assertj.core.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -64,7 +61,7 @@ class OrderServiceTest {
         Product product2 = createProduct("002", HANDMADE, 3000);
         Product product3 = createProduct("003", HANDMADE, 5000);
         productRepository.saveAll(List.of(product1, product2, product3));
-        OrderCreateRequest request = OrderCreateRequest.builder()
+        OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
             .productNumbers(List.of("001", "002"))
             .build();
         LocalDateTime now = LocalDateTime.now();
@@ -99,7 +96,7 @@ class OrderServiceTest {
         stockRepository.saveAll(List.of(stock1, stock2));
         productRepository.saveAll(List.of(product1, product2, product3));
         
-        OrderCreateRequest request = OrderCreateRequest.builder()
+        OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
             .productNumbers(List.of("001", "002", "002", "003"))
             .build();
         LocalDateTime now = LocalDateTime.now();
@@ -144,7 +141,7 @@ class OrderServiceTest {
         stockRepository.saveAll(List.of(stock1, stock2));
         productRepository.saveAll(List.of(product1, product2, product3));
         
-        OrderCreateRequest request = OrderCreateRequest.builder()
+        OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
             .productNumbers(List.of("001", "002", "002", "002", "003"))
             .build();
         LocalDateTime now = LocalDateTime.now();
@@ -163,7 +160,7 @@ class OrderServiceTest {
         Product product2 = createProduct("002", HANDMADE, 3000);
         Product product3 = createProduct("003", HANDMADE, 5000);
         productRepository.saveAll(List.of(product1, product2, product3));
-        OrderCreateRequest request = OrderCreateRequest.builder()
+        OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
             .productNumbers(List.of("001", "001"))
             .build();
         LocalDateTime now = LocalDateTime.now();
