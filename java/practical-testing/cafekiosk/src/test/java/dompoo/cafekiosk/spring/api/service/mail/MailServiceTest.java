@@ -9,16 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class) //테스트가 시작될 때 Mockito로 클래스 생성 가능
 class MailServiceTest {
 	
-	@Spy
+	@Mock
 	private MailSendClient mailSendClient;
 	
 	@Mock
@@ -33,9 +32,11 @@ class MailServiceTest {
 	    //given
 //		when(mailSendClient.sendMail(anyString(), anyString(), anyString(), anyString()))
 //				.thenReturn(true);
-		doReturn(true)
-				.when(mailSendClient)
-				.sendMail(anyString(), anyString(), anyString(), anyString());
+//		doReturn(true)
+//				.when(mailSendClient)
+//				.sendMail(anyString(), anyString(), anyString(), anyString());
+		given(mailSendClient.sendMail(anyString(), anyString(), anyString(), anyString()))
+				.willReturn(true);
 		/* Mock
 		Mock 객체에 아무것도 지정하지 않으면, 예외를 발생시키는 것이 아니라 기본값을 반환한다. (null등)
 		또한 when절을 통해 스터빙을 할 수 있다.
@@ -52,6 +53,7 @@ class MailServiceTest {
 		//then
 		Assertions.assertThat(result).isTrue();
 		//save가 1번 불렸는지 검증
-		verify(mailSendHistoryRepository, times(1)).save(any(MailSendHistory.class));
+//		verify(mailSendHistoryRepository, times(1)).save(any(MailSendHistory.class));
+		then(mailSendHistoryRepository).should(times(1)).save(any(MailSendHistory.class));
 	}
 }
