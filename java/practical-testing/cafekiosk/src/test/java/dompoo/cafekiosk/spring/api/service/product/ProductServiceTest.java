@@ -55,7 +55,7 @@ class ProductServiceTest extends IntegrationTestSupport {
     }
     
     @Test
-    @DisplayName("상품을 등록한다. 상품 번호는 가장 최근 등록한 상품번호 +1 이다.")
+    @DisplayName("신규 상품을 등록할 수 있어야 한다.")
     void createProduct() {
         //given
         Product product = createProduct("001", HANDMADE, SELLING, 4000, "아메리카노");
@@ -80,31 +80,6 @@ class ProductServiceTest extends IntegrationTestSupport {
                 .containsExactlyInAnyOrder(
                         Tuple.tuple("001", "아메리카노", HANDMADE, SELLING, 4000),
                         Tuple.tuple("002", "밤양갱", HANDMADE, SELLING, 3000)
-                );
-    }
-    
-    @Test
-    @DisplayName("상품이 아무것도 없을 때 상품을 등록하면 001번호로 등록된다.")
-    void createProductInEmpty() {
-        ProductCreateServiceRequest request = ProductCreateServiceRequest.builder()
-                .name("밤양갱")
-                .price(3000)
-                .type(HANDMADE)
-                .sellingStatus(SELLING)
-                .build();
-        
-        //when
-        ProductResponse response = productService.createProduct(request);
-        
-        //then
-        assertThat(response)
-                .extracting("productNumber", "name", "type", "sellingStatus", "price")
-                .contains("001", "밤양갱", HANDMADE, SELLING, 3000);
-        List<Product> products = productRepository.findAll();
-        assertThat(products).hasSize(1)
-                .extracting("productNumber", "name", "type", "sellingStatus", "price")
-                .containsExactlyInAnyOrder(
-                        Tuple.tuple("001", "밤양갱", HANDMADE, SELLING, 3000)
                 );
     }
     

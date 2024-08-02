@@ -17,10 +17,11 @@ import java.util.List;
 public class ProductService {
     
     private final ProductRepository productRepository;
+    private final ProductNumberFactory productNumberFactory;
     
     @Transactional
     public ProductResponse createProduct(ProductCreateServiceRequest request) {
-        String nextProductNumber = createNextProductNumber();
+        String nextProductNumber = productNumberFactory.createNextProductNumber();
         
         Product product = request.toProduct(nextProductNumber);
         Product savedProduct = productRepository.save(product);
@@ -28,17 +29,7 @@ public class ProductService {
         return ProductResponse.of(savedProduct);
     }
     
-    private String createNextProductNumber() {
-        String latestProductNumber = productRepository.findLatestProductNumber();
-        if (latestProductNumber == null) {
-            return "001";
-        }
-        
-        int latestProductNumberInt = Integer.parseInt(latestProductNumber);
-        int nextProductNumber = latestProductNumberInt + 1;
-        
-        return String.format("%03d", nextProductNumber);
-    }
+    
     
     /**
      * 읽기전용 트랜잭션
