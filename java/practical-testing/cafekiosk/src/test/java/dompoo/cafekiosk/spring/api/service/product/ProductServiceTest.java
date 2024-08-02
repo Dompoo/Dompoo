@@ -1,5 +1,6 @@
 package dompoo.cafekiosk.spring.api.service.product;
 
+import dompoo.cafekiosk.spring.IntegrationTestSupport;
 import dompoo.cafekiosk.spring.api.service.product.dto.request.ProductCreateServiceRequest;
 import dompoo.cafekiosk.spring.api.service.product.dto.response.ProductResponse;
 import dompoo.cafekiosk.spring.domain.product.Product;
@@ -11,8 +12,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -21,9 +20,7 @@ import static dompoo.cafekiosk.spring.domain.product.ProductType.BAKERY;
 import static dompoo.cafekiosk.spring.domain.product.ProductType.HANDMADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class ProductServiceTest {
+class ProductServiceTest extends IntegrationTestSupport {
     
     @Autowired
     private ProductRepository productRepository;

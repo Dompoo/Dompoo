@@ -1,5 +1,6 @@
 package dompoo.cafekiosk.spring.api.service.order;
 
+import dompoo.cafekiosk.spring.IntegrationTestSupport;
 import dompoo.cafekiosk.spring.api.service.order.dto.request.OrderCreateServiceRequest;
 import dompoo.cafekiosk.spring.api.service.order.dto.response.OrderResponse;
 import dompoo.cafekiosk.spring.domain.order.OrderRepository;
@@ -13,8 +14,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,8 +22,6 @@ import static dompoo.cafekiosk.spring.domain.product.ProductSellingStatus.SELLIN
 import static dompoo.cafekiosk.spring.domain.product.ProductType.*;
 import static org.assertj.core.api.Assertions.*;
 
-@ActiveProfiles("test")
-@SpringBootTest
 //@Transactional
 //Transactional로 롤백을 하면, 실제 서비스 코드 내부에서 트랜잭션이 걸리든 안걸리든 상관없이
 //트랜잭션 내부에서 코드가 실행된다. -> 트랜잭션이 없어서 생기는 문제를 파악할 수 없게 된다.
@@ -32,7 +29,7 @@ import static org.assertj.core.api.Assertions.*;
 + save delete 등은 SimpleJpaRepository라는 구현체에 트랜잭션이 이미 걸려 있기 때문에 쿼리가 잘 나가지만,
 변경감지 기능은 트랜잭션 외부에서 실행되므로 작동하지 않았던 것이다.
  */
-class OrderServiceTest {
+class OrderServiceTest extends IntegrationTestSupport {
     
     @Autowired
     private ProductRepository productRepository;

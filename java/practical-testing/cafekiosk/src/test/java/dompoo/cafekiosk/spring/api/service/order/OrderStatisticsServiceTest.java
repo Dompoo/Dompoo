@@ -1,5 +1,6 @@
 package dompoo.cafekiosk.spring.api.service.order;
 
+import dompoo.cafekiosk.spring.IntegrationTestSupport;
 import dompoo.cafekiosk.spring.client.mail.MailSendClient;
 import dompoo.cafekiosk.spring.domain.history.mail.MailSendHistory;
 import dompoo.cafekiosk.spring.domain.history.mail.MailSendHistoryRepository;
@@ -17,7 +18,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
@@ -27,8 +27,7 @@ import static dompoo.cafekiosk.spring.domain.product.ProductSellingStatus.*;
 import static dompoo.cafekiosk.spring.domain.product.ProductType.HANDMADE;
 import static org.mockito.ArgumentMatchers.any;
 
-@SpringBootTest
-class OrderStatisticsServiceTest {
+class OrderStatisticsServiceTest extends IntegrationTestSupport {
 	
 	@Autowired
 	private OrderStatisticsService orderStatisticsService;
