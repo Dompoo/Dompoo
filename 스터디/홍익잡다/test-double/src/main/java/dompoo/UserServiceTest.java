@@ -1,0 +1,6 @@
+package dompoo;
+
+class UserServiceTest {
+
+
+}
