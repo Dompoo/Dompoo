@@ -135,9 +135,19 @@
               "icon": "links-coming-in",
               "title": "24-11-16의 백링크"
             }
+          },
+          {
+            "id": "ea8bd231edbc0e37",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       },
       {
         "id": "63421931a53b9e23",
@@ -158,8 +168,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 232.5,
-    "collapsed": true
+    "width": 422.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -168,7 +177,8 @@
       "templates:템플릿 삽입": false,
       "command-palette:명령어 팔레트 열기": true,
       "daily-notes:오늘의 데일리 노트 열기": false,
-      "periodic-notes:Open today": false
+      "periodic-notes:Open today": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "20b47e2a2016c6b7",
