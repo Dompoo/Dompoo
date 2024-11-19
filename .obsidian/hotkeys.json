@@ -1,0 +1,46 @@
+{
+  "graph:open": [],
+  "graph:open-local": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "G"
+    }
+  ],
+  "editor:delete-paragraph": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "Backspace"
+    }
+  ],
+  "workspace:goto-tab-1": [],
+  "workspace:goto-tab-2": [],
+  "app:toggle-right-sidebar": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "2"
+    }
+  ],
+  "app:toggle-left-sidebar": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "1"
+    }
+  ],
+  "app:delete-file": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "Backspace"
+    }
+  ]
+}

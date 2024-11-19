@@ -1,0 +1,11 @@
+{
+  "promptDelete": true,
+  "foldHeading": false,
+  "showRibbon": true,
+  "alwaysUpdateLinks": true,
+  "trashOption": "local",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "01. 빠른 메모",
+  "attachmentFolderPath": "91. 첨부파일",
+  "spellcheck": false
+}

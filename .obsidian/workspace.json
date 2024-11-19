@@ -1,0 +1,214 @@
+{
+  "main": {
+    "id": "3049dda7ac2dc3af",
+    "type": "split",
+    "children": [
+      {
+        "id": "441eedd181c3721b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "20b47e2a2016c6b7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "10. 데일리노트/24-11-19.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "24-11-19"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "3ab741e523aa4806",
+    "type": "split",
+    "children": [
+      {
+        "id": "5a7127d01c7aae8f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "67de8f14f2957413",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "1d0818e650e62ad7",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 232.500732421875
+  },
+  "right": {
+    "id": "aed3141ffb705e02",
+    "type": "split",
+    "children": [
+      {
+        "id": "47b2ff8d2d7e8d45",
+        "type": "tabs",
+        "dimension": 39.79933110367893,
+        "children": [
+          {
+            "id": "24906416f1b611cb",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "c3c9c3a728f1c0ba",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "10. 데일리노트/24-11-16.md"
+              },
+              "icon": "lucide-list",
+              "title": "24-11-16 개요"
+            }
+          },
+          {
+            "id": "39f2f1a948391123",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "10. 데일리노트/24-11-16.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "24-11-16의 나가는 링크"
+            }
+          },
+          {
+            "id": "c8d2fbdb835eaa5f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "10. 데일리노트/24-11-16.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-coming-in",
+              "title": "24-11-16의 백링크"
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "63421931a53b9e23",
+        "type": "tabs",
+        "dimension": 60.200668896321076,
+        "children": [
+          {
+            "id": "60db7bdb86d517b3",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 232.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:퀵 스위처 열기": true,
+      "graph:그래프 뷰 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": true,
+      "daily-notes:오늘의 데일리 노트 열기": false,
+      "periodic-notes:Open today": false
+    }
+  },
+  "active": "20b47e2a2016c6b7",
+  "lastOpenFiles": [
+    "10. 데일리노트/2024-11-19.md",
+    "10. 데일리노트/24-11-19.md",
+    "02. PROJECT/우아한테크코스.md",
+    "10. 데일리노트/24-11-17.md",
+    "10. 데일리노트/24-11-16.md",
+    "02. PROJECT/취업준비/우아한 테크코스 지원서.md",
+    "11. 회고/우테코 프리코스 4주차 회고.md",
+    "11. 회고/우테코 프리코스 3주차 회고.md",
+    "11. 회고/우테코 프리코스 2주차 회고.md",
+    "01. 빠른 메모/무제 파일.md",
+    "02. PROJECT/취업준비/_지원서.md",
+    "90. 템플릿/주간 회고 템플릿.md",
+    "90. 템플릿/데일리 노트 템플릿.md",
+    "02. PROJECT/코딩테스트 준비/Union-Find.md",
+    "02. PROJECT/코딩테스트 준비/Priority Queue.md",
+    "02. PROJECT/코딩테스트 준비/크루스칼.md",
+    "02. PROJECT/코딩테스트 준비/다익스트라.md",
+    "02. PROJECT/코딩테스트 준비/_코테를 위한 알고리즘.md",
+    "12. 주간 회고/24년 47주차 회고 (11-17).md",
+    "02. PROJECT/취업준비/SSAFY 지원 에세이.md",
+    "01. 빠른 메모/BFS.md",
+    "02. PROJECT/코딩테스트 준비/알고리즘.md",
+    "02. PROJECT/코딩테스트 준비",
+    "04. ARCHIVES",
+    "03. AREAS",
+    "02. PROJECT",
+    "12. 주간 회고/24년-46주차 회고 (11/10).md",
+    "12. 주간 회고/24년-46주차 회고 (11",
+    "12. 주간 회고/24년 46주차 회고(11-10).md",
+    "10. 데일리노트/2024-11-16.md",
+    "91. 첨부파일",
+    "10. 데일리노트",
+    "01. 빠른 메모",
+    "✍️ 회고/🚬 주간 회고/24년 46주차 회고(11-10).md",
+    "12. 주간 회고",
+    "90. 템플릿",
+    "회고/무제 파일.canvas"
+  ]
+}
