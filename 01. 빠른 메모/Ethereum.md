@@ -40,6 +40,20 @@
 	- 각 명령어는 정해진 값의 비용을 가진다.
 - 각 트랜잭션에는 `Gas`한도가 정해져 있으며, 만약 이 한도를 초과하면 실행을 중지한다.
 - 이를 통해 불필요하게 자원을 낭비하는 `Smart Contract`의 실행을 방지한다.
+- `Gas`는 EOA가 트랜잭션에 포함시켜 CA에 넘겨주는 형식이다.
+- CA가 `Gas`를 사용하며 트랜잭션을 실행시킨 후, 남은 `Gas`는 EOA에게 다시 돌려준다.
+	- 이때, 만약 `Gas`를 다 사용해서 더 이상 실행시키지 못한다면, 해당 상태 변화는 롤백된다.
+	- 또한 네트워크 사용료 개념으로 EOA에게 `Gas`를 돌려주지 않는다.
+- 트랜잭션 가격을 계산해보자.
+	- A가 B에게 1ETH를 보내고 싶다고 하자.
+	- A는 `maxPriorityFeePerGas`를 10wei로 설정했다.
+	- 현재 이더리움 네트워크에서 `BaseFeePerGas`는 190wei다.
+	- 따라서 1가스당 200wei가 필요하다.
+	- 이때, 전송이 21000가스가 필요하다고 가정하면, 21000가스 필요 X 200wei = 0.0042ETH이다.
+	- A는 1ETH + 0.0042ETH를 내야한다.
+	- B는 1ETH를 받는다.
+	- 중간 Validator는 21000가스 계산 X 10wei = 0.0021ETH를 받는다.
+	- 이때 BaseFee는 소각된다. (21000가스 X 190wei = 0.0039ETH) <- 디플레이션 방지
 # DApp
 - DApp은 필수적인 두 컴포넌트를 지닌다.
 	- 블록체인 상의 `Smart Contract`
@@ -82,3 +96,32 @@
 - World State
 	- 이더리움 네트워크의 전역 상태를 나타낸다.
 	- 이더리움 네트워크의 모든 계정의 계정 주소 - 계정 상태를 저장한다.
+# 트랜잭션
+- 트랜잭션에 의해 World State는 다음 State로 넘어가게 된다.
+- 이렇게 하기 위해 어떤 노드든 트랜잭션은 BroadCast 할 수 있다.
+	- Validator에서 실행된 후 (EVM 실행)
+	- 이 실행 결과(상태변화)가 다른 노드로 전파된다.
+	- 이 상태변화가 Validated Block에 포함되어야 World State에 기록된다.
+- 각 트랜잭션은 아래 3가지 요소를 가지고 있다.
+	- from : 트랜잭션에 서명하고 전송한 계정의 주소(무조건 EOA)
+	- to : 트랜잭션의 수신 주소
+		- EOA일 경우 이더 전송
+		- CA일 경우 `Smart Contract` 호출
+	- signature : 발신자의 서명
+	- nonce : 발신 계정의 트랜잭션 번호(카운터)
+	- value : 전송하려는 이더의 양(wei 단위)
+	- inputdate : `Smart Contract`에서 args 처럼 사용되는 값
+	- gasLimit : 트랜잭션 실행에 사용될 수 있는 최대 가스
+	- maxPriorityFeePerGas : 검증자에게 팁으로 제공될 수 있는 가스당 최대 가격
+	- maxFeePerGas : 수신자가 최대로 부담할 수 있는 가스당 가격
+- 트랜잭션에도 여러 종류가 있다.
+	- message calls : `internal transaction`이다. 다른 계정에게 메시지를 보내는 것
+	- contract creation : `Smart Contract`를 생성하는 트랜잭션이다.
+		- 누군가에게 보내는 것이 아니므로 to가 비어있다.
+	- contract run : `Smart Contract`를 실행하는 트랜잭션이다.
+		- to는 해당 `Smart Contract`의 주소이다.
+- 트랜잭션 제출 후에는 다음과 같은 일들이 벌어진다.
+	1. 트랜잭션의 해시가 암호학적으로 생성된다.
+	2. 네트워크에 전파되어 대기 중인 트랜잭션 풀에 등록된다.
+	3. 검증자가 해당 트랜잭션을 블록에 포함시켜 검증된다.(successful)
+	4. 해당 블록이 시간이 지나 justified -> finalized 상태까지 변화된다. (더욱 더 core가 되가는 것)
