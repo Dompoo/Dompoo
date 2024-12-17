@@ -6,7 +6,7 @@
 	- `String str = new StringBuilder().append(str1).append(str2).toString()`
 	- 최적화 내용은 버전에 따라 다르다. 아무튼 최적화된다는 것이 중요하다.
 - 따라서 우리는 편하게 + 연산을 통해 더하면 된다.
-### 최적화가 안되는 경우 (중요)
+# 최적화가 안되는 경우 (중요)
 - 반복문을 통해 문자열을 더하는 경우
 ```java
 String str = "";
