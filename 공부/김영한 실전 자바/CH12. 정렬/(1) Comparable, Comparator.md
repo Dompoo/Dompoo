@@ -51,3 +51,7 @@ Arrays.sort(arr, (o1, o2) -> o2 - o1); // 7 5 3 2 1
 ### TreeMap, TreeSet 등
 - 이 자료구조는 저장할 때부터 정렬하여 저장하기 때문에 `Comparable` 또는 `Comparator`가 필수이다.
 - 해당 컬렉션 객체를 생성할 때 `Comparator`를 제공한다면 해당 기준으로, 제공하지 않는다면 자연 정렬 순서로 정렬된다.
+### Enum
+- 모든 열거형 객체는 Enum 클래스를 상속받는다.
+- Enum 클래스 내부에는 `final`인 `Comparable`이 구현되어 있다. (`ordinal` 기준 정렬)
+- 따라서 기본 `ordinal` 기준 정렬을 사용하던가, `Comparator`를 제공하여 정렬해야 한다. (`Comparable` 오버라이딩 불가)
