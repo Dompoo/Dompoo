@@ -29,6 +29,8 @@ private static class MyThread implements Runnable {
 }
 ```
 
+- 참고로 `new Thread()`로 생성할 때, 두번째 파라미터로 스레드 이름을 지정해줄 수도 있다.
+
 ## 왜 Runnable이 권장될까?
 
 - 자바가 단일 상속만을 지원하므로, 다른 클래스를 상속받는 경우 **Thread**를 상속받을 수 없다.
