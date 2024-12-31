@@ -75,3 +75,50 @@ private static class Task implements Runnable {
 - 즉, main 스레드에서 `task1.result + task2.result`는 두 스레드의 작업이 모두 끝나고 실행되어야 한다.
 
 ![Join 없는 결과](Join_없는_결과.png)
+
+## Sleep으로 해결
+
+```java
+thread1.start();
+thread2.start();
+ThreadUtils.log(task1.result); // 0
+ThreadUtils.log(task2.result); // 0
+Thread.sleep(3000);
+ThreadUtils.log(task1.result); // 1275
+ThreadUtils.log(task2.result); // 3775
+```
+
+- 하지만 이 방법은 타이밍을 맞추기 어렵다.
+  - 언제 각 스레드의 작업이 끝날까?
+  - 무작정 오래 기다리면 느려질 뿐이다.
+  - 다른 스레드의 작업이 끝나자마자 바로 실행되었으면 좋겠다.
+- 다른 방법으로는 무한루프를 통해 다른 스레드가 **TERMINATED** 상태가 되는지 확인하는 방법이 있다.
+  - 하지만, CPU 연산을 너무 많이 쓴다.
+- 이것을 해결하기 위해 **Join**을 사용한다.
+
+## Join으로 해결
+
+```java
+// ...
+thread1.start();
+thread2.start();
+ThreadUtils.log(task1.result); // 0
+ThreadUtils.log(task2.result); // 0
+thread1.join();
+thread2.join();
+ThreadUtils.log(task1.result); // 1275
+ThreadUtils.log(task2.result); // 3775
+
+/* 결과
+12:14:38.380 [Thread-02] 작업 완료, result = 3775
+12:14:38.380 [Thread-01] 작업 완료, result = 1275
+12:14:38.381 [     main] 1275
+12:14:38.381 [     main] 3775
+*/
+```
+
+- `join()`을 사용하면 main 스레드가 각 스레드의 작업이 끝날때까지 대기한다.
+  - 타임스탬프를 보면 0.001초만에 깨어난 것을 확인할 수 있다.
+- 이렇게 `join()` 이후에 다른 스레드가 끝나기를 기다리는 상태가 **WAITING**이다.
+- `join()`은 기본적으로 무한정 대기하기 때문에, 특정 시간만큼만 대기하도록 설정할 수 있다.
+  - `join()` 메서드에 파라미터로 millis를 넘겨주면 된다.
