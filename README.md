@@ -5,5 +5,5 @@
 - 저는 [우아한테크코스](https://www.woowacourse.io/)에서 백엔드 개발을 공부하고 있습니다.
 - 저는 사람들과 이야기를 나누며 성장하는 것을 좋아합니다.
 
-[![이메일](https://img.shields.io/badge/Email-black?logo=gmail&logoSize=amg&style=flat-square)](mailto:dlckdrms0517@gmail.com)
-[![벨로그](https://img.shields.io/badge/Velog-black?logo=velog&logoSize=amg&style=flat-square)](https://velog.io/@dompoo/posts)
+[![이메일](https://img.shields.io/badge/Email-005FF9?logo=maildotru&logoSize=amg&logoColor=white&style=for-the-badge)](mailto:dlckdrms0517@gmail.com)
+[![벨로그](https://img.shields.io/badge/Velog-20C997?logo=velog&logoColor=white&style=for-the-badge)](https://velog.io/@dompoo/posts)
