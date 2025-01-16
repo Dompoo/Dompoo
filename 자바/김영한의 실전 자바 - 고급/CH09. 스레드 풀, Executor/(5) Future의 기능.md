@@ -26,6 +26,13 @@
     - `ExecutionException` : 작업 계산 중 예외가 터지면 발생한다.
   - `get(long timeout, TimeUnit unit)` 을 통하여 대기 시간을 지정할 수 있다.
     - 이 경우 `TimeoutException` 이 발생할 수 있다.
+- `submit()`
+  - 작업을 한개 제출한다.
+- `List<Future<T>> invokeAll()`
+  - 작업을 컬렉션에 담아 여러개 한번에 제출하고, 모두 완료될 때까지 기다린다.
+  - 모두 완료된 후에 반환되므로, `get()`을 하며 추가 대기하지 않는다.
+- `T invokeAny()`
+  - 작업을 컬렉션에 담아 여러개 한번에 제출하고, 가장 먼저 완료된 작업의 결과를 반환한다.
 
 ## 예외에 대하여
 
