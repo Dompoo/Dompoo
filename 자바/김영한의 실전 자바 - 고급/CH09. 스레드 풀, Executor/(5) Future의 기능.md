@@ -40,3 +40,81 @@
 - `get()`을 호출했는데, 인터럽트가 걸리면 예외가 발생한다.
 - `get()`을 호출했는데, 스레드가 작업하는 도중 예외가 발생하면 발생한다.
 - `get(timeout)`을 호출했는데, 타임아웃이 지나면 예외가 발생한다.
+
+## 활용
+
+- 아래 예제는 3개의 task를 병렬 실행하는 예제이다.
+- 단, `ExecutorService`가 적절히 종료되지 못하고 있는데, 이는 `OrderService`가 `AutoCloseable`을 구현하도록 하여 해결할 수 있다.
+  - `ExecutorService`의 종료에 대하여는 추후에 더 자세히 다룬다.
+
+```java
+public class OrderService {
+    
+    private final ExecutorService es = Executors.newFixedThreadPool(4);
+    
+    public void order(String orderNo) throws InterruptedException, ExecutionException {
+        InventoryWork inventoryWork = new InventoryWork(orderNo);
+        ShippingWork shippingWork = new ShippingWork(orderNo);
+        AccountingWork accountingWork = new AccountingWork(orderNo);
+
+        // 작업 요청
+        List<Future<Boolean>> futures = es.invokeAll(List.of(inventoryWork, shippingWork, accountingWork));
+        
+        for (Future<Boolean> future : futures) {
+            if (!future.get()) {
+                log("일부 작업이 실패했습니다.");
+                return;
+            }
+        }
+        log("모든 주문 처리가 성공적으로 완료되었습니다.");
+    }
+
+    static class InventoryWork implements Callable<Boolean> {
+
+        private final String orderNo;
+
+        public InventoryWork(String orderNo) {
+            this.orderNo = orderNo;
+        }
+
+        @Override
+        public Boolean call() {
+            log("재고 업데이트: " + orderNo);
+            sleep(1000);
+            return true;
+        }
+    }
+
+    static class ShippingWork implements Callable<Boolean> {
+
+        private final String orderNo;
+
+        public ShippingWork(String orderNo) {
+            this.orderNo = orderNo;
+        }
+
+        @Override
+        public Boolean call() {
+            log("배송 시스템 알림: " + orderNo);
+            sleep(1000);
+            return true;
+        }
+    }
+
+    static class AccountingWork implements Callable<Boolean> {
+
+        private final String orderNo;
+
+        public AccountingWork(String orderNo) {
+            this.orderNo = orderNo;
+        }
+
+        @Override
+        public Boolean call() {
+            log("회계 시스템 업데이트: " + orderNo);
+            sleep(1000);
+            return true;
+        }
+    }
+}
+```
