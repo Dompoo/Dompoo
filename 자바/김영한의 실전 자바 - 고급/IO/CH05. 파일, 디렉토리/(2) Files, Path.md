@@ -33,3 +33,21 @@ BasicFileAttributes attrs = Files.readAttributes(file, BasicFileAttributes.class
 - **정규 경로** : 절대 경로에서 .. 등이 모두 계산된 경로
   - `/Users/Dompoo/study/java/java-adv2`
 - **상대 경로** : 현재 위치 기준으로의 경로, 자바 프로젝트 기준이다.
+
+## Files 통해서 읽고 쓰기
+
+```java
+String writeString = "abc\n가나다";
+Path path = Path.of(PATH);
+		
+// 쓰기
+Files.writeString(path, writeString, StandardCharsets.UTF_8);
+		
+// 읽기
+String fullString = Files.readString(path, StandardCharsets.UTF_8);
+List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+Stream<String> linesStream = Files.lines(path, StandardCharsets.UTF_8);
+```
+
+- `FileWriter`, `FileReader` 등을 사용할 필요 없이 매우 간단하게 읽고 쓸 수 있다.
+- `readAllLines()`는 한번에 다 읽는데에 비해, `lines()`는 한줄씩 읽어들인다.
