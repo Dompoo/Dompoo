@@ -24,3 +24,12 @@ System.out.println("Files.size(file) = " + Files.size(file));
 System.out.println("Files.getLastModifiedTime(file) = " + Files.getLastModifiedTime(file));
 BasicFileAttributes attrs = Files.readAttributes(file, BasicFileAttributes.class);
 ```
+
+## 절대 경로, 정규 경로, 상대 경로
+
+- `Path.of("temp/..")` 에서
+- **절대 경로** : `Files` 객체 그 자체의 경로
+  - `/Users/Dompoo/study/java/java-adv2/temp/..`
+- **정규 경로** : 절대 경로에서 .. 등이 모두 계산된 경로
+  - `/Users/Dompoo/study/java/java-adv2`
+- **상대 경로** : 현재 위치 기준으로의 경로, 자바 프로젝트 기준이다.
