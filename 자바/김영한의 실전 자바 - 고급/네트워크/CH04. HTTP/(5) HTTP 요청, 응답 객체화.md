@@ -130,3 +130,69 @@ public class HttpResponse {
 ```
 
 - 이 객체를 통해서 적절하게 메시지 바디를 설정하고, `flush()`하여 응답을 보낼 수 있다.
+
+## 사용
+
+```java
+public class HttpServerV4Session implements Runnable {
+	
+	private final Socket socket;
+	
+	public HttpServerV4Session(Socket socket) {
+		this.socket = socket;
+	}
+	
+	@Override
+	public void run() {
+		try {
+			processHttpRequest(socket);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	private static void processHttpRequest(Socket socket) throws IOException {
+		try (socket;
+			 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+			 PrintWriter writer = new PrintWriter(socket.getOutputStream(), false, StandardCharsets.UTF_8)
+		) {
+			HttpRequest request = new HttpRequest(reader);
+			HttpResponse response = new HttpResponse(writer);
+			
+			if (request.getPath().equals("/favicon.ico")) {
+				return;
+			}
+			
+			log("=== HTTP 요청 정보 ===");
+			System.out.println(request);
+			
+			log("=== HTTP 응답 생성 시작 ===");
+			if (request.getPath().equals("/site1")) {
+				response.writeBody(createSite1Body());
+			} else if (request.getPath().equals("/site2")) {
+				response.writeBody(createSite2Body());
+			} else {
+				response.writeBody(createDefaultResponseBody());
+			}
+			response.flush();
+			
+			log("=== HTTP 응답 정보 ===");
+			System.out.println(response);
+		}
+	}
+	
+	private static String createSite1Body() {
+		return "<h1>Hello World!</h1><br><h2>This is Site1<h2>";
+	}
+	
+	private static String createSite2Body() {
+		return  "<h1>Hello World!</h1><br><h2>This is Site2<h2>";
+	}
+	
+	private static String createDefaultResponseBody() {
+		return "<h1>Hello World!</h1>";
+	}
+}
+```
+
+- 반복되는 `Content-Type`, `Content-Length` 작성등의 기능을 응답 객체가 수행하기 때문에 훨씬 간결해질 수 있다.
