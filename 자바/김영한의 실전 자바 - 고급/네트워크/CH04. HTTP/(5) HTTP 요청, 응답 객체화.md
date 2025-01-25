@@ -81,3 +81,52 @@ public class HttpRequest {
 - 단순한 문자열 연산들이다.
 - 이것을 통해 `Reader`만 넣어주면 원하는 데이터를 뽑아볼 수 있는 객체이다.
 - 메시지 바디 부분 파싱은 필요해지면 추가하자.
+
+## 응답 객체
+
+```java
+public class HttpResponse {
+	
+	private final PrintWriter writer;
+	private final StringBuilder bodyBuilder = new StringBuilder();
+	private int statusCode = 200;
+	private String contentType = "text/html; chatset=UTF-8";
+	
+	public HttpResponse(PrintWriter writer) {
+		this.writer = writer;
+	}
+	
+	public void setStatusCode(int statusCode) {
+		this.statusCode = statusCode;
+	}
+	
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+	
+	public void writeBody(String body) {
+		bodyBuilder.append(body);
+	}
+	
+	public void flush() {
+		int contentLength = bodyBuilder.toString().getBytes(StandardCharsets.UTF_8).length;
+		writer.println("HTTP/1.1 " + statusCode + " " + getReasonPhrase(statusCode));
+		writer.println("Content-type: " + contentType);
+		writer.println("content-Length: " + contentLength);
+		writer.println();
+		writer.println(bodyBuilder);
+		writer.flush();
+	}
+	
+	private String getReasonPhrase(int statusCode) {
+		return switch (statusCode) {
+			case 200 -> "OK";
+			case 404 -> "NOT FOUND";
+			case 500 -> "INTERNAL SERVER ERROR";
+			default -> "UNKNOWN STATUS";
+		};
+	}
+}
+```
+
+- 이 객체를 통해서 적절하게 메시지 바디를 설정하고, `flush()`하여 응답을 보낼 수 있다.
