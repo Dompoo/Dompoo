@@ -16,5 +16,6 @@ public class EnvironmentCheck {
 		String url = env.getProperty("url");
 		String username = env.getProperty("username");
 		String password = env.getProperty("password");
+		System.out.println(url + " " + username + " " + password);
 	}
 }
