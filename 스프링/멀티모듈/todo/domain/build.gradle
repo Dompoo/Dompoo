@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     id 'org.springframework.boot' version '3.3.0' apply false
     id 'io.spring.dependency-management' version '1.1.5'
@@ -17,7 +19,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:3.3.0")
+        mavenBom SpringBootPlugin.BOM_COORDINATES
     }
 }
 
