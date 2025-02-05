@@ -1,4 +1,4 @@
-rootProject.name = 'gs-multi-module'
+rootProject.name = 'todo'
 
 include 'application'
 include 'domain'
