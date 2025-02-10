@@ -1,12 +1,10 @@
 import com.google.common.base.Objects;
-import com.google.common.base.Predicates;
+import com.google.common.base.*;
 import com.google.common.collect.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public class GuavaLearnTest {
     
@@ -111,11 +109,50 @@ public class GuavaLearnTest {
             final String bar;
             
             public ValidationDemo(int foo, String bar) {
-                checkArgument(foo > 0, "foo는 0 이상이어야 합니다.");
-                checkArgument(!bar.isBlank(), "bar는 비어있으면 안됩니다.");
+                Preconditions.checkArgument(foo > 0, "foo는 0 이상이어야 합니다.");
+                Preconditions.checkNotNull(bar, "bar는 null이면 안됩니다.");
+                Preconditions.checkArgument(!bar.isBlank(), "bar는 비어있으면 안됩니다.");
                 this.foo = foo;
                 this.bar = bar;
             }
         }
+    }
+    
+    @Test
+    void 문자열_결합() {
+        Joiner joiner = Joiner.on(",").skipNulls();
+        String result = joiner.join("foo", null, "bar");
+        
+        Assertions.assertThat(result).isEqualTo("foo,bar");
+    }
+    
+    @Test
+    void 문자열_분할() {
+        Splitter splitter = Splitter.on(',')
+                .trimResults()
+                .omitEmptyStrings();
+        Iterable<String> parts = splitter.split("foo,  bar,,   baz");
+        
+        Assertions.assertThat(parts).hasSize(3);
+        Assertions.assertThat(parts).containsExactly("foo", "bar", "baz");
+    }
+    
+    @Test
+    void 명명규칙_변환() {
+        String converted = CaseFormat.LOWER_UNDERSCORE
+                .to(CaseFormat.LOWER_CAMEL, "some_property_name");
+        
+        Assertions.assertThat(converted).isEqualTo("somePropertyName");
+    }
+    
+    @Test
+    void 범위_처리() {
+        Range<Integer> range = Range.closed(1, 10);
+        
+        Assertions.assertThat(range.contains(5)).isTrue();
+        Assertions.assertThat(range.lowerEndpoint()).isEqualTo(1);
+        
+        ContiguousSet<Integer> numbers = ContiguousSet.create(range, DiscreteDomain.integers());
+        Assertions.assertThat(numbers).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
 }
