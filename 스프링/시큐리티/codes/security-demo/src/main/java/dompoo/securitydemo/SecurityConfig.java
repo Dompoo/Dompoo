@@ -14,7 +14,7 @@ import org.springframework.security.web.context.SecurityContextHolderFilter;
 
 @Slf4j
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
     
     @Bean
@@ -29,9 +29,6 @@ public class SecurityConfig {
         return http
                 .securityMatchers((auth) -> auth.requestMatchers("/user"))
                 .authorizeHttpRequests((auth) -> auth.requestMatchers("/user").permitAll())
-                .cors((cors) -> cors.disable())
-                .csrf((csrf) -> csrf.disable())
-                .formLogin((login) -> login.disable())
                 .addFilterAfter(new DemoGenericFilterBean(), SecurityContextHolderFilter.class)
                 .addFilterAfter(new DemoOncePerRequestFilter(), SecurityContextHolderFilter.class)
                 .build();
