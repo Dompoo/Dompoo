@@ -14,10 +14,10 @@ public class DemoController {
     
     @GetMapping("/user")
     public String get() {
-        System.out.println("SecurityContextHolder.getContextHolderStrategy() = " + SecurityContextHolder.getContextHolderStrategy());
-        System.out.println("SecurityContextHolder.getContext() = " + SecurityContextHolder.getContext());
-        System.out.println("SecurityContextHolder.getContext().getAuthentication() = " + SecurityContextHolder.getContext().getAuthentication());
-        System.out.println("SecurityContextHolder.getContext().getAuthentication() = " + SecurityContextHolder.getContext().getAuthentication());
+        log.info("SecurityContextHolder.getContextHolderStrategy() = {}", SecurityContextHolder.getContextHolderStrategy());
+        log.info("SecurityContextHolder.getContext() = {}", SecurityContextHolder.getContext());
+        log.info("SecurityContextHolder.getContext().getAuthentication() = {}", SecurityContextHolder.getContext().getAuthentication());
+        log.info("SecurityContextHolder.getContext().getAuthentication() = {}", SecurityContextHolder.getContext().getAuthentication());
         return "OK!!";
     }
 }

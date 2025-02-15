@@ -1,5 +1,7 @@
 package dompoo.securitydemo;
 
+import dompoo.securitydemo.filter.DemoGenericFilterBean;
+import dompoo.securitydemo.filter.DemoOncePerRequestFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,10 +10,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 
 @Slf4j
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig {
     
     @Bean
@@ -29,6 +32,8 @@ public class SecurityConfig {
                 .cors((cors) -> cors.disable())
                 .csrf((csrf) -> csrf.disable())
                 .formLogin((login) -> login.disable())
+                .addFilterAfter(new DemoGenericFilterBean(), SecurityContextHolderFilter.class)
+                .addFilterAfter(new DemoOncePerRequestFilter(), SecurityContextHolderFilter.class)
                 .build();
     }
     
