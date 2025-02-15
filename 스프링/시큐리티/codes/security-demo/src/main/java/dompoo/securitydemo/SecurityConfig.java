@@ -1,5 +1,6 @@
 package dompoo.securitydemo;
 
+import dompoo.securitydemo.cors.DemoCorsConfig;
 import dompoo.securitydemo.filter.DemoGenericFilterBean;
 import dompoo.securitydemo.filter.DemoOncePerRequestFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth.requestMatchers("/user").permitAll())
                 .addFilterAfter(new DemoGenericFilterBean(), SecurityContextHolderFilter.class)
                 .addFilterAfter(new DemoOncePerRequestFilter(), SecurityContextHolderFilter.class)
+                .cors(cors -> cors.configurationSource(new DemoCorsConfig()))
                 .build();
     }
     
