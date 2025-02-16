@@ -3,6 +3,8 @@ package dompoo.securitydemo;
 import dompoo.securitydemo.cors.DemoCorsConfig;
 import dompoo.securitydemo.filter.DemoGenericFilterBean;
 import dompoo.securitydemo.filter.DemoOncePerRequestFilter;
+import dompoo.securitydemo.logout.DemoLogoutHandler;
+import dompoo.securitydemo.logout.DemoLogoutSuccessHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +35,8 @@ public class SecurityConfig {
                 .addFilterAfter(new DemoGenericFilterBean(), SecurityContextHolderFilter.class)
                 .addFilterAfter(new DemoOncePerRequestFilter(), SecurityContextHolderFilter.class)
                 .cors(cors -> cors.configurationSource(new DemoCorsConfig()))
+                .logout(logout -> logout.addLogoutHandler(new DemoLogoutHandler())
+                        .logoutSuccessHandler(new DemoLogoutSuccessHandler()))
                 .build();
     }
     
