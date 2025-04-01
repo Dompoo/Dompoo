@@ -1,7 +1,0 @@
-- 기간, 시간 간격을 나타낸다.
-- Period : 두 날짜 사이 간격을 연, 월, 일로 나타낸다.
-	- getYears, getMonths, getDays 등으로 해당 간격을 받아볼 수 있다.
-	- 이때 364일 간격이었다면, getYears는 0이다. 즉 **내림**이다.
-- Duration : 두 시간 사이 간격을 시, 분, 초로 나타낸다.
-	- toHours, toMinutes, getSeconds 등으로 해당 간격을 받아볼 수 있다.
-	- toMinutePart 같은 것은 전체 시간에서 시를 뺀 분만 반환한다. (65분 지났다면 toMinutes는 65, toMinutePart는 5)

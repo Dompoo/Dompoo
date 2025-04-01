@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: jdbc
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/util/dbfile/test
-    username: sa
-    password:
