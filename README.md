@@ -7,4 +7,4 @@
 
 [![이메일](https://img.shields.io/badge/Email-005FF9?logo=maildotru&logoSize=amg&logoColor=white&style=for-the-badge)](mailto:dlckdrms0517@gmail.com)
 [![벨로그](https://img.shields.io/badge/Velog-20C997?logo=velog&logoColor=white&style=for-the-badge)](https://velog.io/@dompoo/posts)
-[![기록](https://img.shields.io/badge/Notion-000000?logo=notion&logoColor=white&style=for-the-badge)](https://dompoo.notion.site/1ce30154715b807eb88feb5bdac60901)
+[![기록](https://img.shields.io/badge/Notion-000000?logo=notion&logoColor=white&style=for-the-badge)](https://dompoo.site)
